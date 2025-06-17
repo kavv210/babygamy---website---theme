@@ -45,7 +45,7 @@ html, body {
   margin: 0;
   font-family: var(--standard-font);
   color: var(--standard-black);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.5em;
   background-color: var(--pastel-yellow);
 }
@@ -97,7 +97,7 @@ p {
 a {
   text-decoration: none;
   color: var(--pastel-purple);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 a:hover {
@@ -149,7 +149,7 @@ ol {
 }
 
 .buttonText {
-  font-size: 14px;
+  font-size: 16px;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--pastel-purple);
@@ -166,7 +166,7 @@ ol {
 .formField textarea,
 .formField select {
   border: 1px solid var(--bg-light-gray);
-  font-size: 14px;
+  font-size: 16px;
   padding: 12px;
   font-family: var(--standard-font);
   background-color: var(--pastel-yellow);
@@ -201,7 +201,7 @@ ol {
   visibility: hidden;
   height: 0;
   overflow: hidden;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .show {
@@ -209,7 +209,7 @@ ol {
   visibility: visible;
   height: auto;
   overflow: initial;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 /* Logo/Name fix to avoid sticky behavior */
