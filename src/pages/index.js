@@ -10,15 +10,16 @@ import ProductCardGrid from '../components/ProductCardGrid';
 import Quote from '../components/Quote';
 import Title from '../components/Title';
 
-
 import * as styles from './index.module.css';
 import { Link, navigate } from 'gatsby';
 import { toOptimizedImage } from '../helpers/general';
 
-
+const IndexPage = () => {
   const goToShop = () => {
     navigate('/shop');
   };
+
+  const newArrivals = []; // Add real product data here
 
   return (
     <Layout disablePaddingBottom>
@@ -100,7 +101,7 @@ import { toOptimizedImage } from '../helpers/general';
         }
       />
 
-      {/* Promotion */}
+      {/* Sustainability */}
       <div className={styles.sustainableContainer}>
         <Hero
           image={toOptimizedImage('/banner3.png')}
@@ -114,19 +115,6 @@ import { toOptimizedImage } from '../helpers/general';
         />
       </div>
 
-      {/* Social Media */}
-      <div className={styles.socialContainer}>
-        <Title
-          name={'Styled by You'}
-          subtitle={'Tag @sydney to be featured.'}
-        />
-        <div className={styles.socialContentGrid}>
-          <img src={toOptimizedImage(`/social/socialMedia1.png`)} alt={'social media 1'} />
-          <img src={toOptimizedImage(`/social/socialMedia2.png`)} alt={'social media 2'} />
-          <img src={toOptimizedImage(`/social/socialMedia3.png`)} alt={'social media 3'} />
-          <img src={toOptimizedImage(`/social/socialMedia4.png`)} alt={'social media 4'} />
-        </div>
-      </div>
       <AttributeGrid />
     </Layout>
   );
