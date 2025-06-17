@@ -29,7 +29,7 @@ const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const searchRef = createRef();
-  const bannerMessage = 'Free shipping worldwide';
+  const bannerMessage = 'Shipping all over India';
   const searchSuggestions = ['Oversize sweaters', 'Lama Pajamas', 'Candles Cinnamon'];
 
   const handleHover = (navObject) => {
