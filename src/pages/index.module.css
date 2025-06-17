@@ -76,10 +76,7 @@
 .linkContainers a:hover {
     color: var(--standard-gold);
     border-bottom: 1px solid var(--standard-gold);
-}
 
-.blogsContainer {
-    margin-top: 96px;
 }
 
 .sustainableContainer {
