@@ -6,7 +6,6 @@ import Layout from '../components/Layout/Layout';
 import Container from '../components/Container/Container';
 import ProductCardGrid from '../components/ProductCardGrid';
 
-import { generateMockProductData } from '../helpers/mock';
 
 import * as styles from './search.module.css';
 
@@ -14,7 +13,7 @@ const SearchPage = (props) => {
   const params = parse(props.location.search);
   const searchQuery = params.q ? params.q : '';
 
-  const sampleData = generateMockProductData(3, 'woman');
+
 
   return (
     <Layout>
