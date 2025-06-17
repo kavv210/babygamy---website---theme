@@ -284,5 +284,9 @@ ul.bullets {
   .newsletter input[type="submit"] {
     flex: 1 0 100%;
   }
+.logo, .navbar {
+  position: relative !important;
+  top: auto !important;
 }
+
 
