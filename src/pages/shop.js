@@ -13,16 +13,22 @@ import ProductCardGrid from '../components/ProductCardGrid';
 import Button from '../components/Button';
 import Config from '../config.json';
 
+const ShopPage = () => {
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
+    const escapeHandler = (e) => {
+      if (e?.keyCode === 27) {
+        setShowFilter(false);
+      }
+    };
+
     window.addEventListener('keydown', escapeHandler);
     return () => window.removeEventListener('keydown', escapeHandler);
   }, []);
 
-  const escapeHandler = (e) => {
-    if (e?.keyCode === undefined) return;
-    if (e.keyCode === 27) setShowFilter(false);
-  };
+  // Dummy data for ProductCardGrid
+  const data = Config.products || []; // Make sure your config.json has a `products` key
 
   return (
     <Layout>
@@ -76,7 +82,7 @@ import Config from '../config.json';
           </div>
           <div className={styles.productContainer}>
             <span className={styles.mobileItemCount}>476 items</span>
-            <ProductCardGrid data={data}></ProductCardGrid>
+            <ProductCardGrid data={data} />
           </div>
           <div className={styles.loadMoreContainer}>
             <span>6 of 456</span>
@@ -86,7 +92,6 @@ import Config from '../config.json';
           </div>
         </Container>
       </div>
-
       <LayoutOption />
     </Layout>
   );
