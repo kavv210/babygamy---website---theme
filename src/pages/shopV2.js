@@ -12,11 +12,7 @@ import ProductCardGrid from '../components/ProductCardGrid';
 import Button from '../components/Button';
 
 import Config from '../config.json';
-import { generateMockProductData } from '../helpers/mock';
 
-const ShopV2Page = (props) => {
-  const data = generateMockProductData(9, 'woman');
-  const filters = Config.filters;
 
   const [filterState, setFilterState] = useState(filters);
 
