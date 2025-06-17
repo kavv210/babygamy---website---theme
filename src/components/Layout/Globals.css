@@ -33,7 +33,7 @@ html {
   --pastel-pink: #ffd6e0;
   --pastel-blue: #d6f0ff;
   --pastel-purple: #e3d6ff;
-  --pastel-yellow: #fcbacb;
+  --pastel-yellow: #ffe4ed;
   --pastel-green: #d9ffe4;
   --standard-grey: #e2e2e2;
   --standard-dark-grey: #545250;
@@ -78,7 +78,7 @@ h3, .h3 {
 h4, .h4 {
   font-family: var(--brand-font);
   font-size: 30px;
-  color: var(--pastel-green);
+  color: var(--standard-black);
 }
 
 h5, .h5 {
@@ -183,7 +183,7 @@ ol {
 }
 
 .dataTableRow:nth-child(odd) {
-  background-color: var(--pastel-green);
+  background-color: var(--standard-black);
 }
 
 .dataTableCell {
