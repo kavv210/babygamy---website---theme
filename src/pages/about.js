@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'; 
+import React, { useRef } from 'react';
 import Container from '../components/Container';
 import ThemeLink from '../components/ThemeLink';
 import Layout from '../components/Layout/Layout';
@@ -12,8 +12,8 @@ const AboutPage = () => {
   const handleScroll = (ref) => {
     if (ref?.current) {
       window.scrollTo({
+        top: ref.current.offsetTop - 100, // Adjust scroll padding
         behavior: 'smooth',
-        top: ref.current.offsetTop - 200,
       });
     }
   };
@@ -21,14 +21,21 @@ const AboutPage = () => {
   return (
     <Layout disablePaddingBottom>
       <div className={styles.root}>
-        <div className={styles.navContainer}>
-          <ThemeLink onClick={() => handleScroll(storyRef)} to="#story">Our Story</ThemeLink>
-          <ThemeLink onClick={() => handleScroll(valuesRef)} to="#values">Why Babygamy</ThemeLink>
-          <ThemeLink onClick={() => handleScroll(sustainabilityRef)} to="#sustainability">Sustainability</ThemeLink>
+        {/* Header with logo and nav */}
+        <div className={styles.header}>
+          <div className={styles.logo}>
+            <img src="/babygamylogo.jpg" alt="Babygamy Logo" />
+          </div>
+          <div className={styles.navContainer}>
+            <ThemeLink onClick={() => handleScroll(storyRef)} to="#story">Our Story</ThemeLink>
+            <ThemeLink onClick={() => handleScroll(valuesRef)} to="#values">Why Babygamy</ThemeLink>
+            <ThemeLink onClick={() => handleScroll(sustainabilityRef)} to="#sustainability">Sustainability</ThemeLink>
+          </div>
         </div>
 
+        {/* Section: Our Story */}
         <Container size="large" spacing="min">
-          <div ref={storyRef}>
+          <div ref={storyRef} id="story">
             <h3>Babygamy — Organic Love, Woven Gently</h3>
             <p>
               Born from the hands of a mother, Babygamy is a promise of softness and care. Founded with a single goal—to make baby essentials that feel like a hug—every piece we create is rooted in trust, tenderness, and the belief that less is more.
@@ -39,8 +46,9 @@ const AboutPage = () => {
           </div>
         </Container>
 
+        {/* Section: Why Babygamy */}
         <Container size="large" spacing="min">
-          <div ref={valuesRef}>
+          <div ref={valuesRef} id="values">
             <h3>Why Babygamy?</h3>
             <p>
               Every Babygamy product is created with intention. We focus on gentle materials, clean designs, and essentials that truly matter—no fuss, just functional beauty.
@@ -57,8 +65,9 @@ const AboutPage = () => {
           </div>
         </Container>
 
+        {/* Section: Sustainability */}
         <Container size="large" spacing="min">
-          <div ref={sustainabilityRef}>
+          <div ref={sustainabilityRef} id="sustainability">
             <h3>Sustainability at Heart</h3>
             <p>
               Babygamy believes in conscious choices. All our fabrics are organic, and our process is rooted in simplicity and sustainability. By using natural materials and local sourcing, we reduce our footprint while offering products you can feel proud to use.
