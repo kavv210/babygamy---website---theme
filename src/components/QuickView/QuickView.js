@@ -5,7 +5,6 @@ import CurrencyFormatter from '../CurrencyFormatter';
 import SizeList from '../SizeList';
 import SwatchList from '../SwatchList';
 
-import { generateMockProductData } from '../../helpers/mock';
 import AddItemNotificationContext from '../../context/AddItemNotificationProvider';
 
 import * as styles from './QuickView.module.css';
@@ -13,7 +12,6 @@ import { toOptimizedImage } from '../../helpers/general';
 
 const QuickView = (props) => {
   const { close, buttonTitle = 'Add to Bag' } = props;
-  const sampleProduct = generateMockProductData(1, 'sample')[0];
 
   const ctxAddItemNotification = useContext(AddItemNotificationContext);
   const showNotification = ctxAddItemNotification.showNotification;
