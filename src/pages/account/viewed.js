@@ -8,10 +8,7 @@ import Layout from '../../components/Layout/Layout';
 import ProductCardGrid from '../../components/ProductCardGrid';
 
 import { isAuth } from '../../helpers/general';
-import { generateMockProductData } from '../../helpers/mock';
 
-const RecentlyViewedPage = (props) => {
-  const recentlyViewed = generateMockProductData(3, 'shirt');
 
   if (isAuth() === false) {
     navigate('/login');
