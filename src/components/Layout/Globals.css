@@ -1,138 +1,166 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Baloo+2:wght@400;500;600;700&family=Nunito:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@500;600;700&display=swap');
 
 :root {
-  --space1: 3px;
-  --space2: 5px;
-  --space3: 8px;
-  --space4: 13px;
-  --space5: 26px;
-  --space6: 52px;
-  --space7: 76px;
-  --space8: 112px;
+  /* Spacing */
+  --space1: 4px;
+  --space2: 8px;
+  --space3: 12px;
+  --space4: 16px;
+  --space5: 24px;
+  --space6: 36px;
+  --space7: 64px;
+  --space8: 96px;
+
+  /* Breakpoints */
   --mobile: 400px;
   --small: 600px;
   --medium: 1000px;
   --large: 1300px;
 
-  --standard-header: 'Baloo 2', cursive;
-  --standard-font: 'Nunito', sans-serif;
-  --brand-font: 'Fredoka', cursive;
+  /* Fonts */
+  --primary-font: 'Fredoka', sans-serif;
+  --header-font: 'Baloo 2', cursive;
 
-  --standard-black: #2e2e2e;
-  --standard-white: #ffffff;
-  --standard-grey: #f0f0f0;
-  --standard-dark-grey: #6e6e6e;
-  --standard-light-grey: #fcf9f9;
-
-  --primary-color: #6ed2fd;
-  --secondary-color: #fc5f9e;
-  --accent-color1: #fdf3f6;
-  --accent-color2: #d3effa;
-  --accent-color3: #fefefe;
-  --border-color: #e8e8e8;
-  --error: #e66c7f;
+  /* Color Palette: Pastel Y2K Vibe */
+  --pink-main: #f55395;
+  --blue-main: #76d6ff;
+  --soft-pink: #ffe5ec;
+  --soft-blue: #eaf7ff;
+  --lemon: #fff9d9;
+  --mint: #e0f9f1;
+  --white: #ffffff;
+  --gray-light: #f9f9f9;
+  --gray-medium: #c9c9c9;
+  --black-soft: #333333;
+  --error: #ff6b81;
+  --border-color: #ececec;
 }
 
 html, body {
   box-sizing: border-box;
   margin: 0;
-  font-family: var(--standard-font);
-  color: var(--standard-black);
+  padding: 0;
+  font-family: var(--primary-font);
+  background-color: var(--white);
+  color: var(--black-soft);
   font-size: 16px;
-  line-height: 1.5em;
-  font-weight: 400;
-  background-color: var(--standard-white);
+  line-height: 1.6;
 }
 
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* Headings */
 h1, .h1 {
-  font-family: var(--standard-header);
-  font-size: 72px;
-  line-height: 83px;
-  margin: 0;
-  color: var(--primary-color);
+  font-family: var(--header-font);
+  font-size: 64px;
+  color: var(--pink-main);
+  font-weight: 700;
+  margin: var(--space4) 0;
 }
 
 h2, .h2 {
-  font-family: var(--standard-header);
-  font-size: 52px;
-  line-height: 60px;
-  margin: 0;
-  color: var(--secondary-color);
+  font-family: var(--header-font);
+  font-size: 48px;
+  color: var(--blue-main);
+  font-weight: 600;
+  margin: var(--space3) 0;
 }
 
-h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
-  font-family: var(--standard-header);
-  color: var(--primary-color);
+h3, .h3, h4, .h4 {
+  font-family: var(--header-font);
+  font-weight: 600;
+  color: var(--pink-main);
 }
 
-.quote {
-  font-family: var(--brand-font);
-  font-size: 42px;
-  line-height: 49px;
-  color: var(--secondary-color);
+/* Text */
+p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--black-soft);
 }
 
 a {
+  color: var(--pink-main);
   text-decoration: none;
-  color: var(--secondary-color);
-  transition: all ease-in-out 0.3s;
+  transition: color 0.3s ease;
 }
 
 a:hover {
-  color: var(--primary-color);
+  color: var(--blue-main);
 }
 
+/* Buttons */
 .buttonText {
-  font-family: var(--brand-font);
+  font-family: var(--primary-font);
   font-size: 14px;
+  font-weight: 700;
   text-transform: uppercase;
-  font-weight: 600;
-  background-color: var(--primary-color);
-  color: var(--standard-white);
-  padding: 10px 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  background-color: var(--blue-main);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: 12px;
   border: none;
+  box-shadow: 0 4px 10px rgba(118, 214, 255, 0.3);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .buttonText:hover {
-  background-color: var(--secondary-color);
-  color: var(--standard-white);
+  background-color: var(--pink-main);
+  box-shadow: 0 4px 12px rgba(245, 83, 149, 0.4);
 }
 
+/* Forms */
 .formField input,
 .formField textarea,
 .formField select {
-  border-radius: 10px;
+  width: 100%;
+  padding: var(--space3);
+  border-radius: 12px;
   border: 1px solid var(--border-color);
-  background-color: var(--accent-color3);
-  font-family: var(--standard-font);
-  transition: all 0.3s ease-in-out;
+  background-color: var(--soft-blue);
+  font-family: var(--primary-font);
+  transition: border-color 0.3s ease;
 }
 
 .formField input:focus,
 .formField textarea:focus,
 .formField select:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(110,210,253,0.2);
+  outline: none;
+  border-color: var(--pink-main);
+  box-shadow: 0 0 0 3px rgba(245, 83, 149, 0.2);
 }
 
-.callout {
-  background-color: var(--accent-color2);
-  border-left: 5px solid var(--primary-color);
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.04);
-  color: var(--standard-dark-grey);
-}
-
-.dataTableRow:nth-child(odd) {
-  background-color: var(--accent-color1);
-}
-
+/* Cards, Boxes */
 .box {
-  border-radius: 10px;
+  background-color: var(--gray-light);
+  border-radius: 16px;
+  padding: var(--space4);
   border: 1px solid var(--border-color);
-  background-color: var(--accent-color3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
-/* Add more class updates here as needed following new color/font structure */
+/* Alerts, callouts */
+.callout {
+  background-color: var(--soft-pink);
+  border-left: 6px solid var(--pink-main);
+  padding: var(--space4);
+  border-radius: 10px;
+  font-weight: 500;
+  color: var(--black-soft);
+}
+
+.quote {
+  font-family: var(--header-font);
+  font-size: 32px;
+  line-height: 1.4;
+  color: var(--blue-main);
+  margin: var(--space4) 0;
+}
+
+/* Table rows */
+.dataTableRow:nth-child(odd) {
+  background-color: var(--lemon);
+}
