@@ -13,12 +13,33 @@ import Button from '../components/Button';
 
 import Config from '../config.json';
 
+// ✅ Declare filters (You must define this or import it from somewhere)
+const filters = [
+  {
+    category: 'Size',
+    items: [
+      { name: 'S', value: false },
+      { name: 'M', value: false },
+      { name: 'L', value: false },
+    ],
+  },
+  {
+    category: 'Color',
+    items: [
+      { name: 'Red', value: false },
+      { name: 'Blue', value: false },
+    ],
+  },
+];
 
+const data = []; // ✅ Dummy data for ProductCardGrid
+
+const ShopV2Page = () => {
   const [filterState, setFilterState] = useState(filters);
 
   const filterTick = (e, categoryIndex, labelIndex) => {
     const filterStateCopy = [...filterState];
-    filterStateCopy[categoryIndex].items[labelIndex].value = !e.target.value;
+    filterStateCopy[categoryIndex].items[labelIndex].value = !filterStateCopy[categoryIndex].items[labelIndex].value;
     setFilterState(filterStateCopy);
   };
 
