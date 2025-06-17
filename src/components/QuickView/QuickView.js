@@ -10,14 +10,31 @@ import AddItemNotificationContext from '../../context/AddItemNotificationProvide
 import * as styles from './QuickView.module.css';
 import { toOptimizedImage } from '../../helpers/general';
 
+// ✅ Define sampleProduct here
+const sampleProduct = {
+  name: 'Cozy Oversized Sweater',
+  vendor: 'Babygamy',
+  image: '/images/product1.jpg',
+  alt: 'Image of Cozy Oversized Sweater',
+  price: 1899,
+  description:
+    'Made from a soft blend of cotton and recycled fibers. Perfect for layering in all seasons.',
+  productCode: 'BG1234',
+  colorOptions: [
+    { name: 'Pink', hex: '#FFC0CB' },
+    { name: 'Blue', hex: '#ADD8E6' },
+    { name: 'Beige', hex: '#F5F5DC' }
+  ],
+  sizeOptions: ['XS', 'S', 'M', 'L', 'XL']
+};
+
 const QuickView = (props) => {
   const { close, buttonTitle = 'Add to Bag' } = props;
 
   const ctxAddItemNotification = useContext(AddItemNotificationContext);
   const showNotification = ctxAddItemNotification.showNotification;
-  const [activeSwatch, setActiveSwatch] = useState(
-    sampleProduct.colorOptions[0]
-  );
+
+  const [activeSwatch, setActiveSwatch] = useState(sampleProduct.colorOptions[0]);
   const [activeSize, setActiveSize] = useState(sampleProduct.sizeOptions[0]);
 
   const handleAddToBag = () => {
@@ -34,10 +51,13 @@ const QuickView = (props) => {
         <div className={styles.productContainer}>
           <span className={styles.productName}>{sampleProduct.name}</span>
           <div className={styles.price}>
-            <CurrencyFormatter amount={sampleProduct.price}></CurrencyFormatter>
+            <CurrencyFormatter amount={sampleProduct.price} />
           </div>
           <div className={styles.productImageContainer}>
-            <img alt={sampleProduct.alt} src={toOptimizedImage(sampleProduct.image)}></img>
+            <img
+              alt={sampleProduct.alt}
+              src={toOptimizedImage(sampleProduct.image)}
+            />
           </div>
         </div>
 
@@ -57,7 +77,7 @@ const QuickView = (props) => {
           />
         </div>
 
-        <Button onClick={() => handleAddToBag()} fullWidth level={'primary'}>
+        <Button onClick={handleAddToBag} fullWidth level="primary">
           {buttonTitle}
         </Button>
       </div>
