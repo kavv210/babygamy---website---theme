@@ -3,7 +3,6 @@ import * as React from 'react';
 import AttributeGrid from '../components/AttributeGrid';
 import Container from '../components/Container';
 import Hero from '../components/Hero';
-import BlogPreviewGrid from '../components/BlogPreviewGrid';
 import Highlight from '../components/Highlight';
 import Layout from '../components/Layout/Layout';
 import ProductCollectionGrid from '../components/ProductCollectionGrid';
@@ -104,14 +103,6 @@ const IndexPage = () => {
           '“We believe in two things: the pursuit of quality in everything we do, and looking after one another. Everything else should take care of itself.”'
         }
       />
-
-      {/* Blog Grid */}
-      <div className={styles.blogsContainer}>
-        <Container size={'large'}>
-          <Title name={'Journal'} subtitle={'Notes on life and style'} />
-          <BlogPreviewGrid data={blogData} />
-        </Container>
-      </div>
 
       {/* Promotion */}
       <div className={styles.sustainableContainer}>
