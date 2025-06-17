@@ -1,10 +1,9 @@
 {
   "currencyList": [
-    { "value": "AUS", "label": "Australia (AUS $)" },
+    { "value": "INR", "label": "India (INR ₹)" },
     { "value": "CAD", "label": "Canada (CAD $)" },
     { "value": "USD", "label": "United States (US $)" },
-    { "value": "EUR", "label": "Germany (EUR €)" },
-    { "value": "HKD", "label": "Hong Kong (HKD $)" }
+    { "value": "EUR", "label": "Germany (EUR €)" }
   ],
   "languageList": [
     { "value": "english", "label": "English" },
@@ -13,7 +12,7 @@
   ],
   "social": {
     "facebook": "https://www.facebook.com/MatterDesign/",
-    "instagram": "https://www.instagram.com/p/CVwMlChIWmW",
+    "instagram": "https://www.instagram.com/babygamyofficial/",
     "twitter": "https://twitter.com/hellomatter",
     "youtube": "https://www.youtube.com/channel/UCEOu94Haa--QmltsSawflXg"
   },
@@ -44,10 +43,6 @@
       "subTitle": "Support",
       "links": [
         {
-          "text": "FAQ",
-          "link": "/faq"
-        },
-        {
           "text": "Contact Us",
           "link": "/support#contact"
         },
@@ -55,10 +50,7 @@
           "text": "Shipping & Returns",
           "link": "/support#returns"
         },
-        {
-          "text": "How to use this theme",
-          "link": "/how-to-use"
-        }
+      
       ]
     }
   ],
@@ -68,71 +60,67 @@
       "menuLink": "/shop",
       "category": [
         {
-          "categoryLabel": "woman",
+          "categoryLabel": "Newborn (Upto 4 weeks)",
           "submenu": [
             {
-              "menuLabel": "All clothing",
+              "menuLabel": "Baby Essentials",
               "menuLink": "/shop"
             },
             {
-              "menuLabel": "sweatshirts & hoodies",
+              "menuLabel": "Swaddles",
               "menuLink": "/shop"
             },
             {
-              "menuLabel": "jackets",
+              "menuLabel": "Blankets",
               "menuLink": "/shop"
             },
             {
-              "menuLabel": "trousers",
+              "menuLabel": "Bibs",
               "menuLink": "/shop"
             }
           ]
         },
         {
-          "categoryLabel": "men",
+          "categoryLabel": "",
           "submenu": [
             {
-              "menuLabel": "All clothing",
+              "menuLabel": "All Items",
               "menuLink": "/shop"
             },
             {
-              "menuLabel": "sweatshirts & hoodies",
+              "menuLabel": "Baby Essentials",
               "menuLink": "/shop"
             },
             {
-              "menuLabel": "jackets",
+              "menuLabel": "Swaddles",
               "menuLink": "/shop"
             },
             {
-              "menuLabel": "trousers",
+              "menuLabel": "Blankets",
               "menuLink": "/shop"
             },
             {
-              "menuLabel": "pants",
+              "menuLabel": "Bibs",
               "menuLink": "/shop"
             }
           ]
         },
         {
-          "categoryLabel": "accessories",
+          "categoryLabel": "Accessories",
           "submenu": [
             {
-              "menuLabel": "caps & scarves",
+              "menuLabel": "Caps and Scarves",
               "menuLink": "/shop"
             },
             {
-              "menuLabel": "bags",
+              "menuLabel": "Bags",
               "menuLink": "/shop"
             }
           ]
         }
       ]
     },
-    {
-      "menuLabel": "journal",
-      "menuLink": "/blog",
-      "category": null
-    },
+  
     {
       "menuLabel": "About",
       "menuLink": "/about",
@@ -168,8 +156,8 @@
     {
       "category": "gender",
       "items": [
-        { "name": "Male", "value": false },
-        { "name": "Female", "value": false },
+        { "name": "Boy", "value": false },
+        { "name": "Girl", "value": false },
         { "name": "Unisex", "value": false }
       ]
     }
