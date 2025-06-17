@@ -1,12 +1,11 @@
 .root {
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
-@media (max-width: 800px) {
-    .root svg {
-        width: 90px;
-        height: 16.67px;
-    }
+.logo {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
 }
