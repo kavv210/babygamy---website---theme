@@ -49,8 +49,7 @@
         {
           "text": "Shipping & Returns",
           "link": "/support#returns"
-        },
-      
+        }
       ]
     }
   ],
@@ -120,7 +119,6 @@
         }
       ]
     },
-  
     {
       "menuLabel": "About",
       "menuLink": "/about",
@@ -139,7 +137,6 @@
         { "name": "Red", "value": false }
       ]
     },
-
     {
       "category": "size",
       "items": [
