@@ -29,7 +29,7 @@
   --pastel-pink: #ffd6e0;
   --pastel-blue: #d6f0ff;
   --pastel-purple: #e3d6ff;
-  --pastel-yellow: #8a6fa0;
+  --pastel-yellow: #FFF7FA;
   --pastel-green: #d9ffe4;
   --standard-grey: #e2e2e2;
   --standard-dark-grey: #545250;
@@ -45,35 +45,35 @@ html, body {
   margin: 0;
   font-family: var(--standard-font);
   color: var(--standard-black);
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.5em;
   background-color: var(--pastel-yellow);
 }
 
 h1, .h1 {
   font-family: var(--brand-font);
-  font-size: 64px;
+  font-size: 70px;
   line-height: 74px;
   color: var(--pastel-pink);
 }
 
 h2, .h2 {
   font-family: var(--brand-font);
-  font-size: 48px;
+  font-size: 60px;
   line-height: 58px;
   color: var(--pastel-blue);
 }
 
 h3, .h3 {
   font-family: var(--brand-font);
-  font-size: 36px;
+  font-size: 40px;
   line-height: 44px;
   color: var(--pastel-purple);
 }
 
 h4, .h4 {
   font-family: var(--brand-font);
-  font-size: 28px;
+  font-size: 30px;
   color: var(--pastel-green);
 }
 
@@ -157,7 +157,7 @@ ol {
 
 .callout {
   background-color: var(--pastel-blue);
-  padding: 30px;
+  padding: 40px;
   text-align: center;
   color: var(--standard-black);
 }
@@ -166,7 +166,7 @@ ol {
 .formField textarea,
 .formField select {
   border: 1px solid var(--bg-light-gray);
-  font-size: 16px;
+  font-size: 20px;
   padding: 12px;
   font-family: var(--standard-font);
   background-color: var(--pastel-yellow);
