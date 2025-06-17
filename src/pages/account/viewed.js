@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { navigate } from 'gatsby';
 import * as styles from './viewed.module.css';
 
@@ -9,10 +9,14 @@ import ProductCardGrid from '../../components/ProductCardGrid';
 
 import { isAuth } from '../../helpers/general';
 
+const RecentlyViewedPage = () => {
+  useEffect(() => {
+    if (isAuth() === false) {
+      navigate('/login');
+    }
+  }, []);
 
-  if (isAuth() === false) {
-    navigate('/login');
-  }
+  const recentlyViewed = []; // Replace with actual data source or prop
 
   return (
     <Layout>
