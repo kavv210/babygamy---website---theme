@@ -15,7 +15,7 @@ import MiniCart from '../MiniCart';
 import MobileNavigation from '../MobileNavigation';
 import * as styles from './Header.module.css';
 
-const Header = (prop) => {
+const Header = () => {
   const [showMiniCart, setShowMiniCart] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
@@ -25,14 +25,12 @@ const Header = (prop) => {
 
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState('');
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const searchRef = createRef();
   const bannerMessage = 'Free shipping worldwide';
-  const searchSuggestions = [
-    'Oversize sweaters',
-    'Lama Pajamas',
-    'Candles Cinnamon',
-  ];
+  const searchSuggestions = ['Oversize sweaters', 'Lama Pajamas', 'Candles Cinnamon'];
 
   const handleHover = (navObject) => {
     if (navObject.category) {
@@ -51,48 +49,48 @@ const Header = (prop) => {
     setShowSearch(false);
   };
 
-  // disable active menu when show menu is hidden
   useEffect(() => {
     if (showMenu === false) setActiveMenu(false);
   }, [showMenu]);
 
-  // hide menu onscroll
+  // scroll-aware header visibility
   useEffect(() => {
-    const onScroll = () => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
       setShowMenu(false);
       setShowSearch(false);
       setActiveMenu(undefined);
     };
-    window.removeEventListener('scroll', onScroll);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
-  //listen for show search and delay trigger of focus due to CSS visiblity property
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
   useEffect(() => {
     if (showSearch === true) {
       setTimeout(() => {
         searchRef.current.focus();
       }, 250);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSearch]);
 
   return (
-    <div className={styles.root}>
+    <div className={`${styles.root} ${isVisible ? styles.visible : styles.hidden}`}>
       <div className={styles.headerMessageContainer}>
         <span>{bannerMessage}</span>
       </div>
-      <Container size={'large'} spacing={'min'}>
-        {/* header container */}
+      <Container size="large" spacing="min">
         <div className={styles.header}>
           <div className={styles.linkContainer}>
-            <nav
-              role={'presentation'}
-              onMouseLeave={() => {
-                setShowMenu(false);
-              }}
-            >
+            <nav role="presentation" onMouseLeave={() => setShowMenu(false)}>
               {Config.headerLinks.map((navObject) => (
                 <Link
                   key={navObject.menuLink}
@@ -108,39 +106,34 @@ const Header = (prop) => {
             </nav>
           </div>
           <div
-            role={'presentation'}
-            onClick={() => {
-              setMobileMenu(!mobileMenu);
-              // setDepth(0);
-            }}
+            role="presentation"
+            onClick={() => setMobileMenu(!mobileMenu)}
             className={styles.burgerIcon}
           >
-            <Icon symbol={`${mobileMenu === true ? 'cross' : 'burger'}`}></Icon>
+            <Icon symbol={mobileMenu ? 'cross' : 'burger'} />
           </div>
           <Brand />
           <div className={styles.actionContainers}>
             <button
               aria-label="Search"
               className={`${styles.iconButton} ${styles.iconContainer}`}
-              onClick={() => {
-                setShowSearch(!showSearch);
-              }}
+              onClick={() => setShowSearch(!showSearch)}
             >
-              <Icon symbol={'search'}></Icon>
+              <Icon symbol="search" />
             </button>
             <Link
               aria-label="Favorites"
-              href="/account/favorites"
+              to="/account/favorites"
               className={`${styles.iconContainer} ${styles.hideOnMobile}`}
             >
-              <Icon symbol={'heart'}></Icon>
+              <Icon symbol="heart" />
             </Link>
             <Link
               aria-label="Orders"
-              href={isAuth() ? '/login' : '/account/orders/'}
+              to={isAuth() ? '/account/orders/' : '/login'}
               className={`${styles.iconContainer} ${styles.hideOnMobile}`}
             >
-              <Icon symbol={'user'}></Icon>
+              <Icon symbol="user" />
             </Link>
             <button
               aria-label="Cart"
@@ -150,7 +143,7 @@ const Header = (prop) => {
                 setMobileMenu(false);
               }}
             >
-              <Icon symbol={'bag'}></Icon>
+              <Icon symbol="bag" />
               <div className={styles.bagNotification}>
                 <span>1</span>
               </div>
@@ -161,28 +154,27 @@ const Header = (prop) => {
           </div>
         </div>
 
-        {/* search container */}
         <div
           className={`${styles.searchContainer} ${
-            showSearch === true ? styles.show : styles.hide
+            showSearch ? styles.show : styles.hide
           }`}
         >
           <h4>What are you looking for?</h4>
-          <form className={styles.searchForm} onSubmit={(e) => handleSearch(e)}>
+          <form className={styles.searchForm} onSubmit={handleSearch}>
             <FormInputField
               ref={searchRef}
-              icon={'arrow'}
-              id={'searchInput'}
+              icon="arrow"
+              id="searchInput"
               value={search}
-              placeholder={''}
-              type={'text'}
+              placeholder=""
+              type="text"
               handleChange={(_, e) => setSearch(e)}
             />
           </form>
           <div className={styles.suggestionContianer}>
             {searchSuggestions.map((suggestion, index) => (
               <p
-                role={'presentation'}
+                role="presentation"
                 onClick={() => {
                   setShowSearch(false);
                   navigate(`/search?q=${suggestion}`);
@@ -195,7 +187,7 @@ const Header = (prop) => {
             ))}
           </div>
           <div
-            role={'presentation'}
+            role="presentation"
             onClick={(e) => {
               e.stopPropagation();
               setShowSearch(false);
@@ -205,30 +197,25 @@ const Header = (prop) => {
         </div>
       </Container>
 
-      {/* menu container */}
       <div
-        role={'presentation'}
+        role="presentation"
         onMouseLeave={() => setShowMenu(false)}
         onMouseEnter={() => setShowMenu(true)}
-        className={`${styles.menuContainer} ${
-          showMenu === true ? styles.show : ''
-        }`}
+        className={`${styles.menuContainer} ${showMenu ? styles.show : ''}`}
       >
-        <Container size={'large'} spacing={'min'}>
+        <Container size="large" spacing="min">
           <ExpandedMenu menu={menu} />
         </Container>
       </div>
 
-      {/* minicart container */}
       <Drawer visible={showMiniCart} close={() => setShowMiniCart(false)}>
         <MiniCart />
       </Drawer>
 
-      {/* mobile menu */}
       <div className={styles.mobileMenuContainer}>
         <Drawer
           hideCross
-          top={'98px'}
+          top="98px"
           isReverse
           visible={mobileMenu}
           close={() => setMobileMenu(false)}
