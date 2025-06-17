@@ -1,7 +1,17 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Sydney Ecommerce Theme`,
-    siteUrl: `https://jamm.matter.design`,
+    title: `BabyGamy`,
+    siteUrl: `https://www.babygamy.com`,
   },
-  plugins: [],
+  plugins: [ {
+    resolve: `gatsby-plugin-google-fonts`,
+    options: {
+      fonts: [
+        `Space Grotesk\:300,400,500,600`, 
+        `Pacifico`, 
+        `Manrope\:400,600`
+      ],
+      display: 'swap'
+    },
+  },],
 };
