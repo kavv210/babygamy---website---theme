@@ -1,319 +1,138 @@
-/* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Baloo+2:wght@400;500;600;700&family=Nunito:wght@300;400;600;700&display=swap');
 
-/* Root Variables */
 :root {
-  /* Spacing */
-  --space-1: 3px;
-  --space-2: 5px;
-  --space-3: 8px;
-  --space-4: 13px;
-  --space-5: 26px;
-  --space-6: 52px;
-  --space-7: 76px;
-  --space-8: 112px;
+  --space1: 3px;
+  --space2: 5px;
+  --space3: 8px;
+  --space4: 13px;
+  --space5: 26px;
+  --space6: 52px;
+  --space7: 76px;
+  --space8: 112px;
+  --mobile: 400px;
+  --small: 600px;
+  --medium: 1000px;
+  --large: 1300px;
 
-  /* Font Families */
-  --font-serif: 'Inria Serif', serif;
-  --font-sans: 'Inter', sans-serif;
-  --font-deco: 'Yeseva One', cursive;
+  --standard-header: 'Baloo 2', cursive;
+  --standard-font: 'Nunito', sans-serif;
+  --brand-font: 'Fredoka', cursive;
 
-  /* Colors */
-  --black: #000;
-  --white: #fff;
-  --grey: #e2e2e2;
-  --dark-grey: #545250;
-  --light-grey: #FCFAF6;
-  --border-grey: #A9A9A8;
-  --placeholder-grey: #716868;
-  --crumb-grey: #53524E;
-  --disabled-grey: #F2F2F2;
-  --chip-grey: #F1F1F1;
-  --one-grey: #D8D8D8;
-  --bg-grey: #F7F7F7;
-  --bg-dark: #383634;
-  --bg-light: #e5e5e5;
-  --gold: #B59F66;
-  --sale: #902F15;
-  --error: #9A3515;
+  --standard-black: #2e2e2e;
+  --standard-white: #ffffff;
+  --standard-grey: #f0f0f0;
+  --standard-dark-grey: #6e6e6e;
+  --standard-light-grey: #fcf9f9;
+
+  --primary-color: #6ed2fd;
+  --secondary-color: #fc5f9e;
+  --accent-color1: #fdf3f6;
+  --accent-color2: #d3effa;
+  --accent-color3: #fefefe;
+  --border-color: #e8e8e8;
+  --error: #e66c7f;
 }
 
-/* Base Reset */
-* {
+html, body {
   box-sizing: border-box;
-}
-
-body {
   margin: 0;
-  font-family: var(--font-sans), sans-serif;
-  color: var(--black);
+  font-family: var(--standard-font);
+  color: var(--standard-black);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.5em;
+  font-weight: 400;
+  background-color: var(--standard-white);
 }
 
-/* Headings */
 h1, .h1 {
-  font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  line-height: 1.1;
+  font-family: var(--standard-header);
+  font-size: 72px;
+  line-height: 83px;
+  margin: 0;
+  color: var(--primary-color);
 }
 
 h2, .h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.2;
-}
-
-h3, .h3 {
-  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
-  line-height: 1.3;
-}
-
-h4, .h4 {
-  font-size: 1.875rem;
-}
-
-h5, .h5 {
-  font-size: 1.5rem;
-}
-
-h6, .h6 {
-  font-size: 1.25rem;
-}
-
-/* Text Utilities */
-p, ul, ol {
+  font-family: var(--standard-header);
+  font-size: 52px;
+  line-height: 60px;
   margin: 0;
-  padding: 0;
+  color: var(--secondary-color);
 }
 
-ul.bullets {
-  list-style: disc;
-  margin-left: 1.5rem;
+h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  font-family: var(--standard-header);
+  color: var(--primary-color);
 }
 
-ol {
-  list-style: decimal;
-  padding-left: 1.8rem;
+.quote {
+  font-family: var(--brand-font);
+  font-size: 42px;
+  line-height: 49px;
+  color: var(--secondary-color);
 }
 
 a {
   text-decoration: none;
-  color: var(--black);
-  transition: color 0.3s ease;
+  color: var(--secondary-color);
+  transition: all ease-in-out 0.3s;
 }
 
 a:hover {
-  color: var(--grey);
-}
-
-.uppercase {
-  text-transform: uppercase;
-}
-
-.overline {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  color: var(--primary-color);
 }
 
 .buttonText {
+  font-family: var(--brand-font);
   font-size: 14px;
-  font-weight: 600;
   text-transform: uppercase;
+  font-weight: 600;
+  background-color: var(--primary-color);
+  color: var(--standard-white);
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  border: none;
 }
 
-/* Typography Weights */
-.b1 { font-size: 20px; }
-.b2 { font-size: 18px; }
-.b3 { font-size: 16px; }
-.b4 { font-size: 14px; }
-
-/* Subtitles */
-.subtitle { font-size: 20px; font-weight: 500; }
-.subtitle.small { font-size: 18px; }
-
-.small { font-size: 14px; }
-
-/* Responsive Adjustments */
-@media (max-width: 767px) {
-  h1, .h1 { font-size: 2.5rem; }
-  h2, .h2 { font-size: 2.25rem; }
-  h3, .h3 { font-size: 2rem; }
-  h4, .h4 { font-size: 1.75rem; }
-  h5, .h5 { font-size: 1.5rem; }
-  h6, .h6 { font-size: 1.25rem; }
-}
-
-/* Layout & Flex */
-.row,
-.flex-center,
-.flex-start,
-.flex-end,
-.flex-around,
-.flex-between,
-.flex-middle {
-  display: flex;
-  align-items: center;
-}
-
-.flex-center { justify-content: center; }
-.flex-start { justify-content: flex-start; }
-.flex-end { justify-content: flex-end; }
-.flex-around { justify-content: space-around; }
-.flex-between { justify-content: space-between; }
-
-/* Grid Layout */
-.grid {
-  display: grid;
-  gap: 40px;
-}
-
-.grid-gap0 { gap: 0; }
-.grid-gap20 { gap: 20px; }
-.grid-gap60 { gap: 60px; }
-
-.grid-33 { grid-template-columns: repeat(3, 1fr); }
-.grid-25 { grid-template-columns: repeat(4, 1fr); }
-.grid-50 { grid-template-columns: 1fr 1fr; }
-.grid-7525 { grid-template-columns: 3fr 1fr; }
-
-/* Spacing Utilities */
-:where(.p-4) { padding: var(--space-4); }
-:where(.p-5) { padding: var(--space-5); }
-:where(.py-4) { padding-block: var(--space-4); }
-:where(.py-8) { padding-block: var(--space-8); }
-:where(.pt-3) { padding-top: var(--space-3); }
-:where(.pt-4) { padding-top: var(--space-4); }
-:where(.pb-0) { padding-bottom: 0; }
-:where(.pb-4) { padding-bottom: var(--space-4); }
-:where(.mb-0) { margin-bottom: 0; }
-:where(.mb-4) { margin-bottom: var(--space-4); }
-:where(.ml-3) { margin-left: var(--space-3); }
-:where(.ml-4) { margin-left: var(--space-4); }
-:where(.mt-2) { margin-top: var(--space-2); }
-:where(.mt-4) { margin-top: var(--space-4); }
-:where(.mt-5) { margin-top: var(--space-5); }
-:where(.mx-3) { margin-inline: var(--space-3); }
-
-/* Forms */
-.formField {
-  margin-bottom: 20px;
+.buttonText:hover {
+  background-color: var(--secondary-color);
+  color: var(--standard-white);
 }
 
 .formField input,
 .formField textarea,
 .formField select {
-  width: 100%;
-  font-size: 14px;
-  padding: 12px;
-  border: 1px solid var(--bg-light);
-  font-family: var(--font-sans);
-  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--accent-color3);
+  font-family: var(--standard-font);
+  transition: all 0.3s ease-in-out;
 }
 
-.formField textarea {
-  height: 150px;
-  resize: none;
-}
-
-.formField label,
-.formField .label {
-  display: block;
-  font-size: 14px;
-}
-
-.formField.required label::after {
-  content: '*';
-  margin-left: 4px;
-  color: var(--error);
-}
-
-.formField .error,
-.genericError {
-  font-size: 12px;
-  color: var(--error);
-  line-height: 1.25;
-}
-
-/* Tables */
-.dataTable {
-  width: 100%;
-}
-
-.dataTableRow {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 5px 0;
-}
-
-.dataTableRow:nth-child(odd) {
-  background-color: #efefef;
-}
-
-.dataTableCell {
-  padding: 0 5px;
-  display: flex;
-  align-items: center;
-}
-
-.dataTableActionsCell {
-  margin-left: auto;
-}
-
-.dataTableEditor {
-  opacity: 0;
-  visibility: hidden;
-  height: 0;
-  transition: 0.3s ease;
-}
-
-.dataTableEditor.active {
-  opacity: 1;
-  visibility: visible;
-  height: auto;
-}
-
-/* Utilities */
-.text-center { text-align: center; }
-.text-right { text-align: right; }
-.icon-wrap { display: flex; align-items: center; justify-content: center; }
-
-.hidden {
-  opacity: 0;
-  visibility: hidden;
-  height: 0;
-  transition: all 0.3s ease;
-}
-
-.show {
-  opacity: 1;
-  visibility: visible;
-  height: auto;
-}
-
-.disable-action {
-  pointer-events: none;
-  user-select: none;
-  cursor: not-allowed;
-}
-
-.btnGroup > *:not(:last-child) {
-  margin-right: 10px;
+.formField input:focus,
+.formField textarea:focus,
+.formField select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(110,210,253,0.2);
 }
 
 .callout {
-  background: var(--bg-light);
-  padding: 30px;
-  margin: 40px 0;
-  text-align: center;
+  background-color: var(--accent-color2);
+  border-left: 5px solid var(--primary-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+  color: var(--standard-dark-grey);
 }
 
-/* Focus */
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none !important;
+.dataTableRow:nth-child(odd) {
+  background-color: var(--accent-color1);
 }
+
+.box {
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--accent-color3);
+}
+
+/* Add more class updates here as needed following new color/font structure */
