@@ -13,23 +13,63 @@ import Split from '../../components/Split';
 import SwatchList from '../../components/SwatchList';
 import Layout from '../../components/Layout/Layout';
 
-
 import Icon from '../../components/Icons/Icon';
 import ProductCardGrid from '../../components/ProductCardGrid';
 import { navigate } from 'gatsby';
 
 import AddItemNotificationContext from '../../context/AddItemNotificationProvider';
 
-const ProductPage = (props) => {
+// ✅ Dummy data to prevent build failure
+const sampleProduct = {
+  name: 'Cozy Oversized Sweater',
+  vendor: 'Babygamy',
+  gallery: [
+    { src: '/images/sample1.jpg', alt: 'Front view' },
+    { src: '/images/sample2.jpg', alt: 'Side view' },
+  ],
+  colorOptions: ['Blue', 'Pink', 'Mint'],
+  sizeOptions: ['XS', 'S', 'M', 'L'],
+  price: 1899,
+  description:
+    'Our Cozy Oversized Sweater is made from a soft blend of cotton and recycled fibers. Perfect for layering in all seasons.',
+  productCode: 'BG1234',
+};
+
+const suggestions = [
+  {
+    id: 1,
+    title: 'Soft Hoodie',
+    image: '/images/sample3.jpg',
+    price: 1499,
+  },
+  {
+    id: 2,
+    title: 'Knitted Beanie',
+    image: '/images/sample4.jpg',
+    price: 799,
+  },
+  {
+    id: 3,
+    title: 'Chic Cropped Jacket',
+    image: '/images/sample5.jpg',
+    price: 2499,
+  },
+  {
+    id: 4,
+    title: 'Rainbow Scarf',
+    image: '/images/sample6.jpg',
+    price: 599,
+  },
+];
+
+const ProductPage = () => {
   const ctxAddItemNotification = useContext(AddItemNotificationContext);
   const showNotification = ctxAddItemNotification.showNotification;
- 
+
   const [qty, setQty] = useState(0);
   const [isWishlist, setIsWishlist] = useState(false);
-  const [activeSwatch, setActiveSwatch] = useState(
-    sampleProduct.colorOptions[0]
-  );
-  
+  const [activeSwatch, setActiveSwatch] = useState(sampleProduct.colorOptions[0]);
+  const [activeSize, setActiveSize] = useState(sampleProduct.sizeOptions[0]);
 
   return (
     <Layout>
@@ -49,19 +89,17 @@ const ProductPage = (props) => {
             </div>
             <div className={styles.details}>
               <h1>{sampleProduct.name}</h1>
-              <span className={styles.vendor}> by {sampleProduct.vendor}</span>
+              <span className={styles.vendor}>by {sampleProduct.vendor}</span>
 
               <div className={styles.priceContainer}>
                 <CurrencyFormatter appendZero amount={sampleProduct.price} />
               </div>
 
-              <div>
-                <SwatchList
-                  swatchList={sampleProduct.colorOptions}
-                  activeSwatch={activeSwatch}
-                  setActiveSwatch={setActiveSwatch}
-                />
-              </div>
+              <SwatchList
+                swatchList={sampleProduct.colorOptions}
+                activeSwatch={activeSwatch}
+                setActiveSwatch={setActiveSwatch}
+              />
 
               <div className={styles.sizeContainer}>
                 <SizeList
@@ -91,13 +129,13 @@ const ProductPage = (props) => {
                   role={'presentation'}
                   onClick={() => setIsWishlist(!isWishlist)}
                 >
-                  <Icon symbol={'heart'}></Icon>
+                  <Icon symbol={'heart'} />
                   <div
                     className={`${styles.heartFillContainer} ${
-                      isWishlist === true ? styles.show : styles.hide
+                      isWishlist ? styles.show : styles.hide
                     }`}
                   >
-                    <Icon symbol={'heartFill'}></Icon>
+                    <Icon symbol={'heartFill'} />
                   </div>
                 </div>
               </div>
@@ -108,32 +146,19 @@ const ProductPage = (props) => {
               </div>
 
               <div className={styles.informationContainer}>
-                <Accordion
-                  type={'plus'}
-                  customStyle={styles}
-                  title={'composition & care'}
-                >
-                  <p className={styles.information}>
-                    {sampleProduct.description}
-                  </p>
+                <Accordion type={'plus'} customStyle={styles} title={'composition & care'}>
+                  <p className={styles.information}>{sampleProduct.description}</p>
                 </Accordion>
-                <Accordion
-                  type={'plus'}
-                  customStyle={styles}
-                  title={'delivery & returns'}
-                >
-                  <p className={styles.information}>
-                    {sampleProduct.description}
-                  </p>
+                <Accordion type={'plus'} customStyle={styles} title={'delivery & returns'}>
+                  <p className={styles.information}>{sampleProduct.description}</p>
                 </Accordion>
                 <Accordion type={'plus'} customStyle={styles} title={'help'}>
-                  <p className={styles.information}>
-                    {sampleProduct.description}
-                  </p>
+                  <p className={styles.information}>{sampleProduct.description}</p>
                 </Accordion>
               </div>
             </div>
           </div>
+
           <div className={styles.suggestionContainer}>
             <h2>You may also like</h2>
             <ProductCardGrid
