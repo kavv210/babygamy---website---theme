@@ -1,39 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap'); 
 
 .root {
-
 }
 
+/* Updated large promotional text */
+.promotionContainer h2 {
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 42px;
+  line-height: 54px;
+  text-align: center;
+  color: #333;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjusted container layout */
 .collectionContainer {
-    margin-top: 8px;
+  margin-top: 8px;
 }
 
 .promotionContainer {
-    position: relative;
+  position: relative;
 }
 
-.promotionContainer h2 {
-    font-size: 52px;
-    line-height: 62px;
-}
-
+/* Unified text style for message lines */
 .messageContainer {
-    text-align: center;
-    padding: 60px 0px;
-    margin: 0px 30px;
-}
-
-.messageContainer p {
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: center;
+  text-align: center;
+  padding: 60px 0px;
+  margin: 0px 30px;
 }
 
 .messageContainer p {
   font-family: 'Gloria Hallelujah', cursive;
-  font-size: 18px; /* not too big */
+  font-size: 20px;
   text-transform: none;
   font-weight: normal;
   color: #333;
@@ -42,82 +40,100 @@
   margin-bottom: 14px;
 }
 
-.gold {
-    color: var(--standard-gold);
+/* Optional: Make the last line smaller like a footer tag */
+.messageContainer p:last-child {
+  font-size: 16px;
+  opacity: 0.85;
+  margin-top: 12px;
 }
 
+.gold {
+  color: var(--standard-gold);
+}
+
+/* Updated section title */
 .contentTitle {
-    text-align: center;
-    font-weight: normal;
-    font-size: 30px;
-    line-height: 50px;
-    margin-bottom: 16px;
+  font-family: 'Gloria Hallelujah', cursive;
+  text-align: center;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 50px;
+  margin-bottom: 16px;
 }
 
 .newArrivalsContainer {
-    margin-top: 64px;
+  margin-top: 64px;
 }
 
 .highlightContainer {
-    margin: 88px 0px;
+  margin: 88px 0px;
 }
 
 .linkContainers {
-    display: flex;
-    position: absolute;
-    transform: translate(-50%, 0%);
-    bottom: 64px;
-    left: 50%;
-    gap: 72px;
+  display: flex;
+  position: absolute;
+  transform: translate(-50%, 0%);
+  bottom: 64px;
+  left: 50%;
+  gap: 72px;
 }
 
 .ctaCustomButton {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .linkContainers a {
-    color: var(--standard-white);
-    border-bottom: 1px solid var(--standard-white);
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    text-transform: uppercase;
-    transition: all 0.3s ease-in-out;
+  color: var(--standard-white);
+  border-bottom: 1px solid var(--standard-white);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
 }
 
 .linkContainers a:hover {
-    color: var(--standard-gold);
-    border-bottom: 1px solid var(--standard-gold);
+  color: var(--standard-gold);
+  border-bottom: 1px solid var(--standard-gold);
 }
 
 .sustainableContainer {
-    margin: 96px 40px 0px 40px;
+  margin: 96px 40px 0px 40px;
 }
 
 .socialContainer {
-    margin-top: 64px;
+  margin-top: 64px;
 }
 
 .socialContentGrid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .socialContentGrid img {
-    width: 100%;
-    object-fit: cover;
+  width: 100%;
+  object-fit: cover;
 }
 
 @media (max-width: 800px) {
-    .sustainableContainer {
-        margin: 96px 0px 0px 0px;
-    }
+  .sustainableContainer {
+    margin: 96px 0px 0px 0px;
+  }
 
-    .socialContentGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .socialContentGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    .highlightContainer {
-        margin: 88px 0px 40px 0px;
-    }
+  .highlightContainer {
+    margin: 88px 0px 40px 0px;
+  }
+
+  .promotionContainer h2 {
+    font-size: 32px;
+    line-height: 44px;
+  }
+
+  .messageContainer p {
+    font-size: 17px;
+  }
 }
