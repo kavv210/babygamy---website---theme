@@ -19,10 +19,8 @@ const Header = () => {
   const [showMiniCart, setShowMiniCart] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
-
   const [menu, setMenu] = useState();
   const [activeMenu, setActiveMenu] = useState();
-
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState('');
   const [isVisible, setIsVisible] = useState(true);
@@ -53,7 +51,6 @@ const Header = () => {
     if (showMenu === false) setActiveMenu(false);
   }, [showMenu]);
 
-  // scroll-aware header visibility
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -88,31 +85,26 @@ const Header = () => {
         <span>{bannerMessage}</span>
       </div>
       <Container size="large" spacing="min">
-        <div className={styles.header}>
-          <div className={styles.linkContainer}>
-            <nav role="presentation" onMouseLeave={() => setShowMenu(false)}>
-              {Config.headerLinks.map((navObject) => (
-                <Link
-                  key={navObject.menuLink}
-                  onMouseEnter={() => handleHover(navObject)}
-                  className={`${styles.navLink} ${
-                    activeMenu === navObject.menuLabel ? styles.activeLink : ''
-                  }`}
-                  to={navObject.menuLink}
-                >
-                  {navObject.menuLabel}
-                </Link>
-              ))}
-            </nav>
-          </div>
-          <div
-            role="presentation"
-            onClick={() => setMobileMenu(!mobileMenu)}
-            className={styles.burgerIcon}
-          >
-            <Icon symbol={mobileMenu ? 'cross' : 'burger'} />
-          </div>
+        <div className={styles.headerWrapper}>
           <Brand />
+          <nav
+            className={styles.linkContainer}
+            role="presentation"
+            onMouseLeave={() => setShowMenu(false)}
+          >
+            {Config.headerLinks.map((navObject) => (
+              <Link
+                key={navObject.menuLink}
+                onMouseEnter={() => handleHover(navObject)}
+                className={`${styles.navLink} ${
+                  activeMenu === navObject.menuLabel ? styles.activeLink : ''
+                }`}
+                to={navObject.menuLink}
+              >
+                {navObject.menuLabel}
+              </Link>
+            ))}
+          </nav>
           <div className={styles.actionContainers}>
             <button
               aria-label="Search"
@@ -150,6 +142,13 @@ const Header = () => {
             </button>
             <div className={styles.notificationContainer}>
               <AddNotification openCart={() => setShowMiniCart(true)} />
+            </div>
+            <div
+              role="presentation"
+              onClick={() => setMobileMenu(!mobileMenu)}
+              className={styles.burgerIcon}
+            >
+              <Icon symbol={mobileMenu ? 'cross' : 'burger'} />
             </div>
           </div>
         </div>
