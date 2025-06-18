@@ -1,7 +1,6 @@
 import React from 'react';
 import { navigate } from 'gatsby';
 import * as styles from './Brand.module.css';
-import babygamyLogo from './logo2.jpg'; // ✅ import the image
 
 const Brand = () => {
   return (
@@ -11,7 +10,7 @@ const Brand = () => {
       onClick={() => navigate('/')}
     >
       <img
-        src={logo2}
+        src="/babygamylogo.jpg"
         alt="Babygamy Logo"
         className={styles.logo}
       />
