@@ -242,24 +242,38 @@ ol {
   top: auto !important;
   z-index: auto !important;
 }
-/* ===== Subtle Rounding and Gentle Hover Pop ===== */
+/* ===== Global Soft Rounding & Gentle Pop ===== */
 
-/* Rounded corners and soft transitions */
+/* Default subtle rounding and transition for most elements */
 img,
 a,
 div,
 section,
 button {
-  border-radius: 12px; /* Softer curve */
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 10px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-/* Soft hover scale */
+/* Tiny hover pop effect */
 img:hover,
 a:hover,
 div:hover,
 section:hover,
 button:hover {
-  transform: scale(1.015); /* Just a little lift */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); /* Soft shadow */
+  transform: scale(1.008); /* Very slight lift */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); /* Super soft shadow */
+}
+
+/* ===== Exclusions: Header Nav and Banner Image ===== */
+
+/* Adjust these selectors as per your actual HTML class/IDs */
+.header,
+nav,
+.banner,
+.banner img,
+.navbar,
+.promotionContainer img {
+  border-radius: 0 !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
