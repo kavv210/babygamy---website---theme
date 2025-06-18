@@ -1,13 +1,236 @@
-.root {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: var(--standard-white);
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-  z-index: 50;
-  transition: transform 0.4s ease-in-out;
-}
+import React, { useState, useEffect, createRef } from 'react';
+import { Link, navigate } from 'gatsby';
 
-.hiddenHeader {
-  transform: translateY(-100%);
-}
+import { isAuth } from '../../helpers/general';
+
+import AddNotification from '../AddNotification';
+import Brand from '../Brand';
+import Container from '../Container';
+import Config from '../../config.json';
+import Drawer from '../Drawer';
+import ExpandedMenu from '../ExpandedMenu';
+import FormInputField from '../FormInputField/FormInputField';
+import Icon from '../Icons/Icon';
+import MiniCart from '../MiniCart';
+import MobileNavigation from '../MobileNavigation';
+import * as styles from './Header.module.css';
+
+const Header = (prop) => {
+  const [showMiniCart, setShowMiniCart] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
+
+  const [menu, setMenu] = useState();
+  const [activeMenu, setActiveMenu] = useState();
+
+  const [showSearch, setShowSearch] = useState(false);
+  const [search, setSearch] = useState('');
+  const searchRef = createRef();
+
+  const bannerMessage = 'Free shipping worldwide';
+  const searchSuggestions = [
+    'Oversize sweaters',
+    'Lama Pajamas',
+    'Candles Cinnamon',
+  ];
+
+  const handleHover = (navObject) => {
+    if (navObject.category) {
+      setShowMenu(true);
+      setMenu(navObject.category);
+      setShowSearch(false);
+    } else {
+      setMenu(undefined);
+    }
+    setActiveMenu(navObject.menuLabel);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`/search?q=${search}`);
+    setShowSearch(false);
+  };
+
+  useEffect(() => {
+    if (showMenu === false) setActiveMenu(false);
+  }, [showMenu]);
+
+  // Scroll behavior: show header only at top
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setShowMenu(true);
+      } else {
+        setShowMenu(false);
+        setShowSearch(false);
+        setActiveMenu(undefined);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (showSearch === true) {
+      setTimeout(() => {
+        searchRef.current?.focus();
+      }, 250);
+    }
+  }, [showSearch]);
+
+  return (
+    <div className={`${styles.root} ${!showMenu ? styles.hiddenHeader : ''}`}>
+      <div className={styles.headerMessageContainer}>
+        <span>{bannerMessage}</span>
+      </div>
+      <Container size={'large'} spacing={'min'}>
+        <div className={styles.header}>
+          <div className={styles.linkContainer}>
+            <nav
+              role="presentation"
+              onMouseLeave={() => setShowMenu(false)}
+            >
+              {Config.headerLinks.map((navObject) => (
+                <Link
+                  key={navObject.menuLink}
+                  onMouseEnter={() => handleHover(navObject)}
+                  className={`${styles.navLink} ${
+                    activeMenu === navObject.menuLabel ? styles.activeLink : ''
+                  }`}
+                  to={navObject.menuLink}
+                >
+                  {navObject.menuLabel}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          <div
+            role="presentation"
+            onClick={() => setMobileMenu(!mobileMenu)}
+            className={styles.burgerIcon}
+          >
+            <Icon symbol={`${mobileMenu ? 'cross' : 'burger'}`} />
+          </div>
+
+          <Brand />
+
+          <div className={styles.actionContainers}>
+            <button
+              aria-label="Search"
+              className={`${styles.iconButton} ${styles.iconContainer}`}
+              onClick={() => setShowSearch(!showSearch)}
+            >
+              <Icon symbol="search" />
+            </button>
+
+            <Link
+              aria-label="Favorites"
+              href="/account/favorites"
+              className={`${styles.iconContainer} ${styles.hideOnMobile}`}
+            >
+              <Icon symbol="heart" />
+            </Link>
+
+            <Link
+              aria-label="Orders"
+              href={isAuth() ? '/login' : '/account/orders/'}
+              className={`${styles.iconContainer} ${styles.hideOnMobile}`}
+            >
+              <Icon symbol="user" />
+            </Link>
+
+            <button
+              aria-label="Cart"
+              className={`${styles.iconButton} ${styles.iconContainer} ${styles.bagIconContainer}`}
+              onClick={() => {
+                setShowMiniCart(true);
+                setMobileMenu(false);
+              }}
+            >
+              <Icon symbol="bag" />
+              <div className={styles.bagNotification}>
+                <span>1</span>
+              </div>
+            </button>
+
+            <div className={styles.notificationContainer}>
+              <AddNotification openCart={() => setShowMiniCart(true)} />
+            </div>
+          </div>
+        </div>
+
+        <div
+          className={`${styles.searchContainer} ${
+            showSearch ? styles.show : styles.hide
+          }`}
+        >
+          <h4>What are you looking for?</h4>
+          <form className={styles.searchForm} onSubmit={handleSearch}>
+            <FormInputField
+              ref={searchRef}
+              icon="arrow"
+              id="searchInput"
+              value={search}
+              placeholder=""
+              type="text"
+              handleChange={(_, e) => setSearch(e)}
+            />
+          </form>
+          <div className={styles.suggestionContianer}>
+            {searchSuggestions.map((suggestion, index) => (
+              <p
+                key={index}
+                className={styles.suggestion}
+                onClick={() => {
+                  setShowSearch(false);
+                  navigate(`/search?q=${suggestion}`);
+                }}
+              >
+                {suggestion}
+              </p>
+            ))}
+          </div>
+          <div
+            className={styles.backdrop}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowSearch(false);
+            }}
+          ></div>
+        </div>
+      </Container>
+
+      <div
+        className={`${styles.menuContainer} ${
+          showMenu ? styles.show : ''
+        }`}
+        onMouseEnter={() => setShowMenu(true)}
+        onMouseLeave={() => setShowMenu(false)}
+      >
+        <Container size="large" spacing="min">
+          <ExpandedMenu menu={menu} />
+        </Container>
+      </div>
+
+      <Drawer visible={showMiniCart} close={() => setShowMiniCart(false)}>
+        <MiniCart />
+      </Drawer>
+
+      <div className={styles.mobileMenuContainer}>
+        <Drawer
+          hideCross
+          top="98px"
+          isReverse
+          visible={mobileMenu}
+          close={() => setMobileMenu(false)}
+        >
+          <MobileNavigation close={() => setMobileMenu(false)} />
+        </Drawer>
+      </div>
+    </div>
+  );
+};
+
+export default Header;
