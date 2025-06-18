@@ -1,81 +1,195 @@
 .root {
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
   background-color: var(--standard-white);
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
   z-index: 50;
-  transition: transform 0.4s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 }
 
 .hiddenHeader {
   transform: translateY(-100%);
 }
 
-.showHeader {
-  transform: translateY(0);
-}
-
-.iconButton {
-  border: none;
-  background-color: unset;
-  overflow: visible;
-  font-family: inherit;
-  font-size: 100%;
-  margin: 0;
+.headerMessageContainer {
+  background-color: var(--standard-black);
+  color: white;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 14px;
 }
 
 .header {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   align-items: center;
-  padding: 48px 0;
-  margin: 0 auto;
+  justify-content: space-between;
+  padding: 12px 20px;
+}
+
+.linkContainer {
+  display: flex;
+  gap: 16px;
 }
 
 .navLink {
-  margin-right: 40px;
-  text-transform: uppercase;
-  color: var(--standard-black);
-  font-weight: 500;
-  padding-bottom: 50px;
-  font-size: 12px;
-  border-bottom: 2px solid transparent;
-  transition: border 0.3s ease-in-out;
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+  position: relative;
+}
+
+.navLink:hover::after,
+.activeLink::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: black;
 }
 
 .activeLink {
-  border-bottom: 2px solid var(--standard-black);
+  font-weight: 600;
+}
+
+.burgerIcon {
+  display: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .burgerIcon {
+    display: block;
+  }
+
+  .linkContainer {
+    display: none;
+  }
 }
 
 .actionContainers {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
 }
 
-.actionContainers > * {
-  margin-right: 32px;
+.iconContainer {
   cursor: pointer;
-  color: var(--standard-black);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.iconContainer svg {
-  width: 20px;
-  height: 20px;
+.iconButton {
+  background: none;
+  border: none;
+  padding: 0;
 }
 
-@media (max-width: 800px) {
-  .header {
-    padding: 24px 8px;
-    margin: 0 8px;
-  }
+.hideOnMobile {
+  display: flex;
+}
 
-  .actionContainers > * {
-    margin-right: 16px;
+@media (max-width: 768px) {
+  .hideOnMobile {
+    display: none;
   }
+}
 
-  .actionContainers > *:last-child {
-    margin-right: 0;
-  }
+.bagIconContainer {
+  position: relative;
+}
+
+.bagNotification {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 50%;
+}
+
+.notificationContainer {
+  display: none;
+}
+
+.searchContainer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 20px;
+  z-index: 20;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.searchContainer.show {
+  display: flex;
+}
+
+.searchContainer.hide {
+  display: none;
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+}
+
+.suggestionContianer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.suggestion {
+  background-color: #f0f0f0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.suggestion:hover {
+  background-color: #e0e0e0;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+
+.menuContainer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  display: none;
+  z-index: 15;
+}
+
+.menuContainer.show {
+  display: block;
+}
+
+.mobileMenuContainer {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  right: 0;
+  z-index: 30;
 }
