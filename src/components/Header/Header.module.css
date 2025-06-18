@@ -194,3 +194,8 @@
   right: 0;
   z-index: 30;
 }
+.linkContainer {
+  display: flex;
+  gap: 32px; /* ✅ This ensures "Shop" and "About" are not stuck together */
+  align-items: center;
+}
