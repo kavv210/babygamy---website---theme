@@ -27,8 +27,8 @@ const IndexPage = () => {
       <Hero
         maxWidth={'500px'}
         image={'/banner1.png'}
-        title={'Essentials for a cold winter'}
-        subtitle={'Discover Autumn Winter 2021'}
+        title={'Made with Love, Wrapped in Care'}
+        subtitle={'Breathable, beautiful, and kind to your baby’s skin.'}
         ctaText={'shop now'}
         ctaAction={goToShop}
       />
@@ -36,12 +36,12 @@ const IndexPage = () => {
       {/* Message Container */}
       <div className={styles.messageContainer}>
         <p>
-          This is a demonstration of the Sydney theme for verse by{' '}
+          Babygamy brings you ultra-soft, organic muslin essentials designed for delicate beginnings.{' '}
           <span className={styles.gold}>matter design.</span>
         </p>
         <p>
-          wear by <span className={styles.gold}>sunspel</span> and{' '}
-          <span className={styles.gold}>scotch&soda</span>
+          Thoughtfully made for <span className={styles.gold}>giggles</span> and{' '}
+          <span className={styles.gold}>snuggles</span>
         </p>
       </div>
 
