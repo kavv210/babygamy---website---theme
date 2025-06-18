@@ -1,11 +1,14 @@
 .root {
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
+  padding: 12px;
 }
 
 .logo {
-  height: 70px;        /* Or go up to 80px/90px as needed */
-  width: auto;         /* Maintain original aspect ratio */
+  height: 120px;  /* You can adjust this to match your preference */
+  width: auto;
+  max-width: 100%;
   object-fit: contain;
 }
