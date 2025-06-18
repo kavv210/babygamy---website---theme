@@ -1,277 +1,140 @@
-.root {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: var(--standard-white);
-  z-index: 50;
-  transition: transform 0.3s ease, padding 0.3s ease;
-}
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, navigate } from 'gatsby';
 
-/* Removes drop shadow */
-.root.hide-header {
-  transform: translateY(-100%);
-}
+import { isAuth } from '../../helpers/general';
 
-.root.show-header {
-  transform: translateY(0);
-}
+import AddNotification from '../AddNotification';
+import Brand from '../Brand';
+import Container from '../Container';
+import Config from '../../config.json';
+import Drawer from '../Drawer';
+import ExpandedMenu from '../ExpandedMenu';
+import FormInputField from '../FormInputField/FormInputField';
+import Icon from '../Icons/Icon';
+import MiniCart from '../MiniCart';
 
-.iconButton {
-  border: none;
-  background-color: unset;
-  overflow: visible;
-  font-family: inherit;
-  font-size: 100%;
-  line-height: 1.15;
-  margin: 0;
-}
+import * as styles from './Header.module.css';
 
-.header {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  padding: 36px 0;
-  margin: 0 auto;
-  transition: padding 0.3s ease;
-}
+const Header = () => {
+  const [showMenu, setShowMenu] = useState(true);
+  const [activeMenu, setActiveMenu] = useState(undefined);
+  const [showSearch, setShowSearch] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const lastScrollY = useRef(0);
 
-.headerMessageContainer {
-  background-color: var(--bg-grey);
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  // Handle scroll-based header visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
 
-.headerMessageContainer span {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
-  color: var(--grey-crumb);
-}
+      if (currentY < 100 || currentY < lastScrollY.current) {
+        setShowMenu(true);
+      } else {
+        setShowMenu(false);
+        setShowSearch(false);
+        setActiveMenu(undefined);
+      }
 
-.linkContainer {
-  display: flex;
-  justify-content: flex-start;
-}
+      lastScrollY.current = currentY;
+    };
 
-.navLink {
-  margin-right: 40px;
-  text-transform: uppercase;
-  color: var(--standard-black);
-  font-weight: 500;
-  padding-bottom: 50px;
-  font-size: 12px;
-  line-height: 15px;
-  border-bottom: 2px solid transparent;
-  transition: border 0.3s ease-in-out;
-}
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-.activeLink {
-  border-bottom: 2px solid var(--standard-black);
-}
+  const handleMenuHover = (menuName) => {
+    if (window.innerWidth > 800) {
+      setActiveMenu(menuName);
+    }
+  };
 
-.actionContainers {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
+  const handleMenuLeave = () => {
+    if (window.innerWidth > 800) {
+      setActiveMenu(undefined);
+    }
+  };
 
-.actionContainers > * {
-  margin-right: 32px;
-  cursor: pointer;
-  color: var(--standard-black);
-}
+  const navLinks = [
+    { label: 'Shop', path: '/shop', name: 'shop' },
+    { label: 'About', path: '/about', name: 'about' },
+  ];
 
-.iconContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
+  return (
+    <div className={`${styles.root} ${showMenu ? styles['show-header'] : styles['hide-header']}`}>
+      <Container>
+        <div className={styles.header}>
+          {/* Left Nav Links */}
+          <div className={styles.linkContainer}>
+            {navLinks.map(link => (
+              <Link
+                key={link.name}
+                to={link.path}
+                className={styles.navLink}
+                activeClassName={styles.activeLink}
+                onMouseEnter={() => handleMenuHover(link.name)}
+                onMouseLeave={handleMenuLeave}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
 
-.iconContainer svg {
-  width: 20px;
-  height: 20px;
-}
+          {/* Center Brand */}
+          <Brand />
 
-.menuContainer {
-  position: absolute;
-  background-color: var(--standard-white);
-  width: 100%;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease-in-out;
-}
+          {/* Right Action Icons */}
+          <div className={styles.actionContainers}>
+            <div className={styles.iconContainer} onClick={() => setShowSearch(!showSearch)}>
+              <Icon name="search" />
+            </div>
 
-.show {
-  opacity: 1 !important;
-  visibility: visible !important;
-  max-height: 500px !important;
-}
+            <div className={styles.iconContainer} onClick={() => setDrawerOpen(true)}>
+              <Icon name="menu" />
+            </div>
 
-.hide {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  max-height: 0px !important;
-  height: 0px;
-}
+            <div className={styles.iconContainer}>
+              <MiniCart />
+            </div>
 
-.searchContainer {
-  width: 500px;
-  margin: 0 auto;
-  text-align: center;
-  transition: all 0.3s ease-in-out;
-  z-index: 51;
-}
+            <div className={styles.iconContainer}>
+              {isAuth() ? (
+                <Link to="/account">
+                  <Icon name="user" />
+                </Link>
+              ) : (
+                <Link to="/login">
+                  <Icon name="user" />
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
 
-.searchContainer h4 {
-  font-weight: normal;
-  font-size: 32px;
-  line-height: 38px;
-}
+        {/* Expanded Menu */}
+        <ExpandedMenu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
 
-.searchForm {
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
+        {/* Search */}
+        {showSearch && (
+          <div className={styles.searchContainer}>
+            <h4>What are you looking for?</h4>
+            <form className={styles.searchForm} onSubmit={(e) => {
+              e.preventDefault();
+              const query = e.target.search.value.trim();
+              if (query) {
+                navigate(`/search?q=${query}`);
+                setShowSearch(false);
+              }
+            }}>
+              <FormInputField name="search" placeholder="Search here..." />
+            </form>
+          </div>
+        )}
+      </Container>
 
-.searchForm input {
-  width: 95% !important;
-  border-bottom: 1px solid var(--standard-black) !important;
-  border-left: none !important;
-  border-right: none !important;
-  border-top: none !important;
-}
+      {/* Drawer */}
+      <Drawer open={drawerOpen} setOpen={setDrawerOpen} />
+    </div>
+  );
+};
 
-.suggestionContianer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 40px;
-}
-
-.suggestion {
-  padding: 14px 20px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  color: var(--standard-black);
-  border: 1px solid var(--bg-light-gray);
-  cursor: pointer;
-}
-
-.suggestion:hover {
-  background-color: var(--standard-gold);
-  color: var(--standard-white);
-  border: 1px solid transparent;
-}
-
-.backdrop {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
-  background-color: transparent;
-  z-index: -1;
-}
-
-.notificationContainer {
-  position: relative;
-}
-
-.burgerIcon {
-  display: none;
-}
-
-.mobileMenuContainer {
-  display: none;
-}
-
-.bagIconContainer {
-  position: relative;
-}
-
-.bagNotification {
-  position: absolute;
-  bottom: -5px;
-  right: -5px;
-  width: 14px;
-  height: 14px;
-  background-color: var(--standard-gold);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.bagNotification span {
-  color: var(--standard-white);
-  font-size: 9px;
-}
-
-@media (max-width: 800px) {
-  .mobileMenuContainer {
-    display: block;
-  }
-
-  .linkContainer {
-    display: none;
-  }
-
-  .burgerIcon {
-    display: flex;
-    align-items: center;
-  }
-
-  .burgerIcon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .hideOnMobile {
-    display: none;
-  }
-
-  .actionContainers > * {
-    margin-right: 16px;
-  }
-
-  .actionContainers > *:last-child {
-    margin-right: 0px;
-  }
-
-  .header {
-    padding: 20px 8px;
-    margin: 0 8px;
-  }
-
-  .searchContainer {
-    width: auto;
-    padding: 0 32px;
-  }
-
-  .searchContainer h4 {
-    font-size: 32px;
-    line-height: 42px;
-  }
-
-  .navLink {
-    font-size: 16px;
-    position: relative;
-    padding: 4px 0;
-  }
-
-  .navLink:hover::after,
-  .activeLink::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    height: 2px;
-    width: 100%;
-    background-color: black;
-  }
-}
+export default Header;
