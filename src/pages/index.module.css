@@ -31,16 +31,15 @@
     text-align: center;
 }
 
-/* ⭐ Edited first line of message with Gloria Hallelujah */
-.messageContainer p:first-of-type {
-    font-family: 'Gloria Hallelujah', cursive;
-    font-size: 2rem;
-    text-transform: none;
-    font-weight: normal;
-    color: #333;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-    margin-bottom: 16px;
-    line-height: 1.6;
+.messageContainer p {
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 18px; /* not too big */
+  text-transform: none;
+  font-weight: normal;
+  color: #333;
+  text-shadow: 1.5px 1.5px 4px rgba(0, 0, 0, 0.15);
+  line-height: 1.7;
+  margin-bottom: 14px;
 }
 
 .gold {
