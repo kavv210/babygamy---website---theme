@@ -54,13 +54,11 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
-
       setLastScrollY(currentScrollY);
       setShowMenu(false);
       setShowSearch(false);
@@ -86,9 +84,10 @@ const Header = () => {
       </div>
       <Container size="large" spacing="min">
         <div className={styles.headerWrapper}>
-          <Brand />
+          <div className={styles.left}><Brand /></div>
+
           <nav
-            className={styles.linkContainer}
+            className={styles.center}
             role="presentation"
             onMouseLeave={() => setShowMenu(false)}
           >
@@ -105,10 +104,11 @@ const Header = () => {
               </Link>
             ))}
           </nav>
-          <div className={styles.actionContainers}>
+
+          <div className={styles.right}>
             <button
               aria-label="Search"
-              className={`${styles.iconButton} ${styles.iconContainer}`}
+              className={styles.iconButton}
               onClick={() => setShowSearch(!showSearch)}
             >
               <Icon symbol="search" />
@@ -116,20 +116,20 @@ const Header = () => {
             <Link
               aria-label="Favorites"
               to="/account/favorites"
-              className={`${styles.iconContainer} ${styles.hideOnMobile}`}
+              className={styles.iconButton}
             >
               <Icon symbol="heart" />
             </Link>
             <Link
               aria-label="Orders"
               to={isAuth() ? '/account/orders/' : '/login'}
-              className={`${styles.iconContainer} ${styles.hideOnMobile}`}
+              className={styles.iconButton}
             >
               <Icon symbol="user" />
             </Link>
             <button
               aria-label="Cart"
-              className={`${styles.iconButton} ${styles.iconContainer} ${styles.bagIconContainer}`}
+              className={styles.iconButton}
               onClick={() => {
                 setShowMiniCart(true);
                 setMobileMenu(false);
@@ -140,13 +140,11 @@ const Header = () => {
                 <span>1</span>
               </div>
             </button>
-            <div className={styles.notificationContainer}>
-              <AddNotification openCart={() => setShowMiniCart(true)} />
-            </div>
+            <AddNotification openCart={() => setShowMiniCart(true)} />
             <div
               role="presentation"
               onClick={() => setMobileMenu(!mobileMenu)}
-              className={styles.burgerIcon}
+              className={styles.burger}
             >
               <Icon symbol={mobileMenu ? 'cross' : 'burger'} />
             </div>
