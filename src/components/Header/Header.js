@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect, createRef } from 'react'; 
 import { Link, navigate } from 'gatsby';
 
 import { isAuth } from '../../helpers/general';
@@ -34,6 +34,10 @@ const Header = (prop) => {
     'Candles Cinnamon',
   ];
 
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState('up');
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const handleHover = (navObject) => {
     if (navObject.category) {
       setShowMenu(true);
@@ -51,12 +55,10 @@ const Header = (prop) => {
     setShowSearch(false);
   };
 
-  // disable active menu when show menu is hidden
   useEffect(() => {
     if (showMenu === false) setActiveMenu(false);
   }, [showMenu]);
 
-  // hide menu onscroll
   useEffect(() => {
     const onScroll = () => {
       setShowMenu(false);
@@ -68,23 +70,42 @@ const Header = (prop) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  //listen for show search and delay trigger of focus due to CSS visiblity property
   useEffect(() => {
     if (showSearch === true) {
       setTimeout(() => {
         searchRef.current.focus();
       }, 250);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSearch]);
 
+  // 👇 Scroll direction + shrink logic
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      setScrollDirection(currentScrollY > lastScrollY ? 'down' : 'up');
+      setIsScrolled(currentScrollY > 50);
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
+  const headerClasses = `
+    ${styles.root}
+    ${scrollDirection === 'down' ? 'hidden' : 'visible'}
+    ${isScrolled ? 'shrink' : ''}
+  `;
+
   return (
-    <div className={styles.root}>
+    <div className={headerClasses}>
       <div className={styles.headerMessageContainer}>
         <span>{bannerMessage}</span>
       </div>
       <Container size={'large'} spacing={'min'}>
-        {/* header container */}
         <div className={styles.header}>
           <div className={styles.linkContainer}>
             <nav
@@ -111,7 +132,6 @@ const Header = (prop) => {
             role={'presentation'}
             onClick={() => {
               setMobileMenu(!mobileMenu);
-              // setDepth(0);
             }}
             className={styles.burgerIcon}
           >
@@ -161,7 +181,6 @@ const Header = (prop) => {
           </div>
         </div>
 
-        {/* search container */}
         <div
           className={`${styles.searchContainer} ${
             showSearch === true ? styles.show : styles.hide
@@ -205,7 +224,6 @@ const Header = (prop) => {
         </div>
       </Container>
 
-      {/* menu container */}
       <div
         role={'presentation'}
         onMouseLeave={() => setShowMenu(false)}
@@ -219,12 +237,10 @@ const Header = (prop) => {
         </Container>
       </div>
 
-      {/* minicart container */}
       <Drawer visible={showMiniCart} close={() => setShowMiniCart(false)}>
         <MiniCart />
       </Drawer>
 
-      {/* mobile menu */}
       <div className={styles.mobileMenuContainer}>
         <Drawer
           hideCross
