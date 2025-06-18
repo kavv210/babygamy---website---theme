@@ -27,7 +27,11 @@ const IndexPage = () => {
       <Hero
         maxWidth={'500px'}
         image={'/banner1.png'}
-        title={'Made with Love, Wrapped in Care'}
+        title={
+          <span className={styles.heroTitleShadow}>
+            Made with Love, Wrapped in Care
+          </span>
+        }
         subtitle={'Breathable, beautiful, and kind to your baby’s skin.'}
         ctaText={'shop now'}
         ctaAction={goToShop}
@@ -35,7 +39,7 @@ const IndexPage = () => {
 
       {/* Message Container */}
       <div className={styles.messageContainer}>
-        <p>
+        <p className={styles.gloriaMessage}>
           Babygamy brings you ultra-soft, organic muslin essentials designed for delicate beginnings.{' '}
           <span className={styles.gold}>matter design.</span>
         </p>
