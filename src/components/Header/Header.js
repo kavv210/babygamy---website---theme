@@ -19,10 +19,8 @@ const Header = (prop) => {
   const [showMiniCart, setShowMiniCart] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
-
   const [menu, setMenu] = useState();
   const [activeMenu, setActiveMenu] = useState();
-
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState('');
   const searchRef = createRef();
@@ -55,16 +53,22 @@ const Header = (prop) => {
     if (showMenu === false) setActiveMenu(false);
   }, [showMenu]);
 
-  // Scroll behavior: show header only at top
+  // Scroll behavior: show header when scrolling up, hide when scrolling down
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+
     const handleScroll = () => {
-      if (window.scrollY === 0) {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < lastScrollY || currentScrollY === 0) {
         setShowMenu(true);
       } else {
         setShowMenu(false);
         setShowSearch(false);
         setActiveMenu(undefined);
       }
+
+      lastScrollY = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -87,17 +91,12 @@ const Header = (prop) => {
       <Container size={'large'} spacing={'min'}>
         <div className={styles.header}>
           <div className={styles.linkContainer}>
-            <nav
-              role="presentation"
-              onMouseLeave={() => setShowMenu(false)}
-            >
+            <nav role="presentation" onMouseLeave={() => setShowMenu(false)}>
               {Config.headerLinks.map((navObject) => (
                 <Link
                   key={navObject.menuLink}
                   onMouseEnter={() => handleHover(navObject)}
-                  className={`${styles.navLink} ${
-                    activeMenu === navObject.menuLabel ? styles.activeLink : ''
-                  }`}
+                  className={`${styles.navLink} ${activeMenu === navObject.menuLabel ? styles.activeLink : ''}`}
                   to={navObject.menuLink}
                 >
                   {navObject.menuLabel}
@@ -203,9 +202,7 @@ const Header = (prop) => {
       </Container>
 
       <div
-        className={`${styles.menuContainer} ${
-          showMenu ? styles.show : ''
-        }`}
+        className={`${styles.menuContainer} ${showMenu ? styles.show : ''}`}
         onMouseEnter={() => setShowMenu(true)}
         onMouseLeave={() => setShowMenu(false)}
       >
