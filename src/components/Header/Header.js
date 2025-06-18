@@ -53,7 +53,6 @@ const Header = (prop) => {
     if (showMenu === false) setActiveMenu(false);
   }, [showMenu]);
 
-  // Scroll behavior: show header when scrolling up, hide when scrolling down
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
