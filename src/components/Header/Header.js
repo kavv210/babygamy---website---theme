@@ -15,16 +15,15 @@ import MiniCart from '../MiniCart';
 import MobileNavigation from '../MobileNavigation';
 import * as styles from './Header.module.css';
 
-const Header = () => {
+const Header = (prop) => {
   const [showMiniCart, setShowMiniCart] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
-
   const [menu, setMenu] = useState();
   const [activeMenu, setActiveMenu] = useState();
-
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState('');
+  const [showBanner, setShowBanner] = useState(true);
 
   const searchRef = createRef();
   const bannerMessage = 'Free shipping worldwide';
@@ -57,9 +56,11 @@ const Header = () => {
 
   useEffect(() => {
     const onScroll = () => {
+      const y = window.scrollY;
       setShowMenu(false);
       setShowSearch(false);
       setActiveMenu(undefined);
+      setShowBanner(y < 150);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -75,15 +76,19 @@ const Header = () => {
 
   return (
     <div className={styles.root}>
-      <div className={styles.headerMessageContainer}>
-        <span>{bannerMessage}</span>
-      </div>
+      {showBanner && (
+        <div className={styles.headerMessageContainer}>
+          <span>{bannerMessage}</span>
+        </div>
+      )}
       <Container size={'large'} spacing={'min'}>
         <div className={styles.header}>
           <div className={styles.linkContainer}>
             <nav
               role={'presentation'}
-              onMouseLeave={() => setShowMenu(false)}
+              onMouseLeave={() => {
+                setShowMenu(false);
+              }}
             >
               {Config.headerLinks.map((navObject) => (
                 <Link
@@ -101,17 +106,21 @@ const Header = () => {
           </div>
           <div
             role={'presentation'}
-            onClick={() => setMobileMenu(!mobileMenu)}
+            onClick={() => {
+              setMobileMenu(!mobileMenu);
+            }}
             className={styles.burgerIcon}
           >
-            <Icon symbol={`${mobileMenu ? 'cross' : 'burger'}`} />
+            <Icon symbol={`${mobileMenu === true ? 'cross' : 'burger'}`} />
           </div>
           <Brand />
           <div className={styles.actionContainers}>
             <button
               aria-label="Search"
               className={`${styles.iconButton} ${styles.iconContainer}`}
-              onClick={() => setShowSearch(!showSearch)}
+              onClick={() => {
+                setShowSearch(!showSearch);
+              }}
             >
               <Icon symbol={'search'} />
             </button>
@@ -150,11 +159,11 @@ const Header = () => {
 
         <div
           className={`${styles.searchContainer} ${
-            showSearch ? styles.show : styles.hide
+            showSearch === true ? styles.show : styles.hide
           }`}
         >
           <h4>What are you looking for?</h4>
-          <form className={styles.searchForm} onSubmit={handleSearch}>
+          <form className={styles.searchForm} onSubmit={(e) => handleSearch(e)}>
             <FormInputField
               ref={searchRef}
               icon={'arrow'}
@@ -187,7 +196,7 @@ const Header = () => {
               setShowSearch(false);
             }}
             className={styles.backdrop}
-          />
+          ></div>
         </div>
       </Container>
 
@@ -195,7 +204,9 @@ const Header = () => {
         role={'presentation'}
         onMouseLeave={() => setShowMenu(false)}
         onMouseEnter={() => setShowMenu(true)}
-        className={`${styles.menuContainer} ${showMenu ? styles.show : ''}`}
+        className={`${styles.menuContainer} ${
+          showMenu === true ? styles.show : ''
+        }`}
       >
         <Container size={'large'} spacing={'min'}>
           <ExpandedMenu menu={menu} />
