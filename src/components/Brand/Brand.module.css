@@ -7,8 +7,8 @@
 }
 
 .logo {
-  height: 120px;  /* You can adjust this to match your preference */
-  width: auto;
-  max-width: 100%;
+  height: 120px;      /* adjust this for taller or shorter logo */
+  width: auto;        /* keeps original proportions */
+  max-width: 100%;    /* prevents overflow */
   object-fit: contain;
 }
