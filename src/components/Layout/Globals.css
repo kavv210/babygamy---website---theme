@@ -38,6 +38,7 @@ html {
   --standard-grey: #e2e2e2;
   --standard-dark-grey: #545250;
   --standard-light-grey: #FCFAF6;
+  --bg-dark: #000000;
   --grey-passthough: #979797;
   --bg-light-gray: #f5f5f5;
   --error: #f57373;
@@ -107,6 +108,17 @@ a {
 a:hover {
   color: var(--pastel-pink);
 }
+
+.float-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.float-hover:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
 
 input:focus {
   outline: none;
