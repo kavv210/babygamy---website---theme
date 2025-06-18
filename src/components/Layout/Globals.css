@@ -9,7 +9,7 @@ html {
 
 :root {
   --space1: 3px;
-  --space2: 5px;
+  --space2: 6px;
   --space3: 8px;
   --space4: 13px;
   --space5: 26px;
@@ -242,31 +242,37 @@ ol {
   top: auto !important;
   z-index: auto !important;
 }
-/* Round and animate only images and specific visual blocks */
+/* ===== Global Soft Rounding & Gentle Pop ===== */
+
+/* Default subtle rounding and transition for most elements */
 img,
-.hoverCard,
-.card,
-.button {
+a,
+div,
+section,
+button {
   border-radius: 10px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-/* Gentle pop effect */
+/* Tiny hover pop effect */
 img:hover,
-.hoverCard:hover,
-.card:hover,
-.button:hover {
-  transform: scale(1.01);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+a:hover,
+div:hover,
+section:hover,
+button:hover {
+  transform: scale(1.008); /* Very slight lift */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); /* Super soft shadow */
 }
 
-/* Remove pop and rounding on header and banner */
+/* ===== Exclusions: Header Nav and Banner Image ===== */
+
+/* Adjust these selectors as per your actual HTML class/IDs */
 .header,
 nav,
 .banner,
 .banner img,
-.promotionContainer img,
-.navbar {
+.navbar,
+.promotionContainer img {
   border-radius: 0 !important;
   transform: none !important;
   box-shadow: none !important;
