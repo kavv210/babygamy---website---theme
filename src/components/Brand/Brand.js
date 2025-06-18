@@ -10,7 +10,7 @@ const Brand = () => {
       onClick={() => navigate('/')}
     >
       <img
-        src="/babygamylogo.jpg"
+        src="/babygamylogo2.jpg"
         alt="Babygamy Logo"
         className={styles.logo}
       />
