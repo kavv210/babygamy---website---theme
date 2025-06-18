@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react'; 
+import React, { useState, useEffect, createRef } from 'react';
 import { Link, navigate } from 'gatsby';
 
 import { isAuth } from '../../helpers/general';
@@ -25,7 +25,6 @@ const Header = () => {
 
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState('');
-  const [scrollDirection, setScrollDirection] = useState('up');
 
   const searchRef = createRef();
   const bannerMessage = 'Free shipping worldwide';
@@ -74,27 +73,8 @@ const Header = () => {
     }
   }, [showSearch]);
 
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const updateScrollDirection = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY < 10) {
-        setScrollDirection('up');
-      } else if (currentScrollY > lastScrollY) {
-        setScrollDirection('down');
-      } else {
-        setScrollDirection('up');
-      }
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener('scroll', updateScrollDirection);
-    return () => window.removeEventListener('scroll', updateScrollDirection);
-  }, []);
-
   return (
-    <div className={`${styles.root} ${scrollDirection === 'down' ? styles.rootHide : ''}`}>
+    <div className={styles.root}>
       <div className={styles.headerMessageContainer}>
         <span>{bannerMessage}</span>
       </div>
@@ -124,7 +104,7 @@ const Header = () => {
             onClick={() => setMobileMenu(!mobileMenu)}
             className={styles.burgerIcon}
           >
-            <Icon symbol={`${mobileMenu === true ? 'cross' : 'burger'}`}></Icon>
+            <Icon symbol={`${mobileMenu ? 'cross' : 'burger'}`} />
           </div>
           <Brand />
           <div className={styles.actionContainers}>
@@ -133,21 +113,21 @@ const Header = () => {
               className={`${styles.iconButton} ${styles.iconContainer}`}
               onClick={() => setShowSearch(!showSearch)}
             >
-              <Icon symbol={'search'}></Icon>
+              <Icon symbol={'search'} />
             </button>
             <Link
               aria-label="Favorites"
               href="/account/favorites"
               className={`${styles.iconContainer} ${styles.hideOnMobile}`}
             >
-              <Icon symbol={'heart'}></Icon>
+              <Icon symbol={'heart'} />
             </Link>
             <Link
               aria-label="Orders"
               href={isAuth() ? '/login' : '/account/orders/'}
               className={`${styles.iconContainer} ${styles.hideOnMobile}`}
             >
-              <Icon symbol={'user'}></Icon>
+              <Icon symbol={'user'} />
             </Link>
             <button
               aria-label="Cart"
@@ -157,7 +137,7 @@ const Header = () => {
                 setMobileMenu(false);
               }}
             >
-              <Icon symbol={'bag'}></Icon>
+              <Icon symbol={'bag'} />
               <div className={styles.bagNotification}>
                 <span>1</span>
               </div>
@@ -170,7 +150,7 @@ const Header = () => {
 
         <div
           className={`${styles.searchContainer} ${
-            showSearch === true ? styles.show : styles.hide
+            showSearch ? styles.show : styles.hide
           }`}
         >
           <h4>What are you looking for?</h4>
@@ -188,33 +168,34 @@ const Header = () => {
           <div className={styles.suggestionContianer}>
             {searchSuggestions.map((suggestion, index) => (
               <p
-                key={index}
-                className={styles.suggestion}
+                role={'presentation'}
                 onClick={() => {
                   setShowSearch(false);
                   navigate(`/search?q=${suggestion}`);
                 }}
+                key={index}
+                className={styles.suggestion}
               >
                 {suggestion}
               </p>
             ))}
           </div>
           <div
-            className={styles.backdrop}
+            role={'presentation'}
             onClick={(e) => {
               e.stopPropagation();
               setShowSearch(false);
             }}
-          ></div>
+            className={styles.backdrop}
+          />
         </div>
       </Container>
 
       <div
-        className={`${styles.menuContainer} ${
-          showMenu === true ? styles.show : ''
-        }`}
+        role={'presentation'}
         onMouseLeave={() => setShowMenu(false)}
         onMouseEnter={() => setShowMenu(true)}
+        className={`${styles.menuContainer} ${showMenu ? styles.show : ''}`}
       >
         <Container size={'large'} spacing={'min'}>
           <ExpandedMenu menu={menu} />
