@@ -3,19 +3,16 @@ import { navigate } from 'gatsby';
 
 import * as styles from './Brand.module.css';
 
-const Brand = (props) => {
+const Brand = () => {
   return (
     <div
       className={styles.root}
-      role={'presentation'}
+      role="presentation"
       onClick={() => navigate('/')}
     >
-      {/* Replaced SVG with babygamylogo.jpg image */}
       <img
-        src="/babygamylogo.jpg"
-        alt="Babygamy"
-        width={127}
-        height={24}
+        src="/logo2.jpg"
+        alt="Babygamy Logo"
         className={styles.logo}
       />
     </div>
