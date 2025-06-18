@@ -15,20 +15,24 @@ import MiniCart from '../MiniCart';
 import MobileNavigation from '../MobileNavigation';
 import * as styles from './Header.module.css';
 
-const Header = () => {
+const Header = (prop) => {
   const [showMiniCart, setShowMiniCart] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
+
   const [menu, setMenu] = useState();
   const [activeMenu, setActiveMenu] = useState();
+
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState('');
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   const searchRef = createRef();
-  const bannerMessage = 'Shipping all over India';
-  const searchSuggestions = ['Oversize sweaters', 'Lama Pajamas', 'Candles Cinnamon'];
+  const bannerMessage = 'Free shipping worldwide';
+  const searchSuggestions = [
+    'Oversize sweaters',
+    'Lama Pajamas',
+    'Candles Cinnamon',
+  ];
 
   const handleHover = (navObject) => {
     if (navObject.category) {
@@ -47,131 +51,138 @@ const Header = () => {
     setShowSearch(false);
   };
 
+  // disable active menu when show menu is hidden
   useEffect(() => {
     if (showMenu === false) setActiveMenu(false);
   }, [showMenu]);
 
+  // hide menu onscroll
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-      setLastScrollY(currentScrollY);
+    const onScroll = () => {
       setShowMenu(false);
       setShowSearch(false);
       setActiveMenu(undefined);
     };
+    window.removeEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
-
+  //listen for show search and delay trigger of focus due to CSS visiblity property
   useEffect(() => {
     if (showSearch === true) {
       setTimeout(() => {
         searchRef.current.focus();
       }, 250);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSearch]);
 
   return (
-    <div className={`${styles.root} ${isVisible ? styles.visible : styles.hidden}`}>
+    <div className={styles.root}>
       <div className={styles.headerMessageContainer}>
         <span>{bannerMessage}</span>
       </div>
-      <Container size="large" spacing="min">
-        <div className={styles.headerWrapper}>
-          <div className={styles.left}><Brand /></div>
-
-          <nav
-            className={styles.center}
-            role="presentation"
-            onMouseLeave={() => setShowMenu(false)}
+      <Container size={'large'} spacing={'min'}>
+        {/* header container */}
+        <div className={styles.header}>
+          <div className={styles.linkContainer}>
+            <nav
+              role={'presentation'}
+              onMouseLeave={() => {
+                setShowMenu(false);
+              }}
+            >
+              {Config.headerLinks.map((navObject) => (
+                <Link
+                  key={navObject.menuLink}
+                  onMouseEnter={() => handleHover(navObject)}
+                  className={`${styles.navLink} ${
+                    activeMenu === navObject.menuLabel ? styles.activeLink : ''
+                  }`}
+                  to={navObject.menuLink}
+                >
+                  {navObject.menuLabel}
+                </Link>
+              ))}
+            </nav>
+          </div>
+          <div
+            role={'presentation'}
+            onClick={() => {
+              setMobileMenu(!mobileMenu);
+              // setDepth(0);
+            }}
+            className={styles.burgerIcon}
           >
-            {Config.headerLinks.map((navObject) => (
-              <Link
-                key={navObject.menuLink}
-                onMouseEnter={() => handleHover(navObject)}
-                className={`${styles.navLink} ${
-                  activeMenu === navObject.menuLabel ? styles.activeLink : ''
-                }`}
-                to={navObject.menuLink}
-              >
-                {navObject.menuLabel}
-              </Link>
-            ))}
-          </nav>
-
-          <div className={styles.right}>
+            <Icon symbol={`${mobileMenu === true ? 'cross' : 'burger'}`}></Icon>
+          </div>
+          <Brand />
+          <div className={styles.actionContainers}>
             <button
               aria-label="Search"
-              className={styles.iconButton}
-              onClick={() => setShowSearch(!showSearch)}
+              className={`${styles.iconButton} ${styles.iconContainer}`}
+              onClick={() => {
+                setShowSearch(!showSearch);
+              }}
             >
-              <Icon symbol="search" />
+              <Icon symbol={'search'}></Icon>
             </button>
             <Link
               aria-label="Favorites"
-              to="/account/favorites"
-              className={styles.iconButton}
+              href="/account/favorites"
+              className={`${styles.iconContainer} ${styles.hideOnMobile}`}
             >
-              <Icon symbol="heart" />
+              <Icon symbol={'heart'}></Icon>
             </Link>
             <Link
               aria-label="Orders"
-              to={isAuth() ? '/account/orders/' : '/login'}
-              className={styles.iconButton}
+              href={isAuth() ? '/login' : '/account/orders/'}
+              className={`${styles.iconContainer} ${styles.hideOnMobile}`}
             >
-              <Icon symbol="user" />
+              <Icon symbol={'user'}></Icon>
             </Link>
             <button
               aria-label="Cart"
-              className={styles.iconButton}
+              className={`${styles.iconButton} ${styles.iconContainer} ${styles.bagIconContainer}`}
               onClick={() => {
                 setShowMiniCart(true);
                 setMobileMenu(false);
               }}
             >
-              <Icon symbol="bag" />
+              <Icon symbol={'bag'}></Icon>
               <div className={styles.bagNotification}>
                 <span>1</span>
               </div>
             </button>
-            <AddNotification openCart={() => setShowMiniCart(true)} />
-            <div
-              role="presentation"
-              onClick={() => setMobileMenu(!mobileMenu)}
-              className={styles.burger}
-            >
-              <Icon symbol={mobileMenu ? 'cross' : 'burger'} />
+            <div className={styles.notificationContainer}>
+              <AddNotification openCart={() => setShowMiniCart(true)} />
             </div>
           </div>
         </div>
 
+        {/* search container */}
         <div
           className={`${styles.searchContainer} ${
-            showSearch ? styles.show : styles.hide
+            showSearch === true ? styles.show : styles.hide
           }`}
         >
           <h4>What are you looking for?</h4>
-          <form className={styles.searchForm} onSubmit={handleSearch}>
+          <form className={styles.searchForm} onSubmit={(e) => handleSearch(e)}>
             <FormInputField
               ref={searchRef}
-              icon="arrow"
-              id="searchInput"
+              icon={'arrow'}
+              id={'searchInput'}
               value={search}
-              placeholder=""
-              type="text"
+              placeholder={''}
+              type={'text'}
               handleChange={(_, e) => setSearch(e)}
             />
           </form>
           <div className={styles.suggestionContianer}>
             {searchSuggestions.map((suggestion, index) => (
               <p
-                role="presentation"
+                role={'presentation'}
                 onClick={() => {
                   setShowSearch(false);
                   navigate(`/search?q=${suggestion}`);
@@ -184,7 +195,7 @@ const Header = () => {
             ))}
           </div>
           <div
-            role="presentation"
+            role={'presentation'}
             onClick={(e) => {
               e.stopPropagation();
               setShowSearch(false);
@@ -194,25 +205,30 @@ const Header = () => {
         </div>
       </Container>
 
+      {/* menu container */}
       <div
-        role="presentation"
+        role={'presentation'}
         onMouseLeave={() => setShowMenu(false)}
         onMouseEnter={() => setShowMenu(true)}
-        className={`${styles.menuContainer} ${showMenu ? styles.show : ''}`}
+        className={`${styles.menuContainer} ${
+          showMenu === true ? styles.show : ''
+        }`}
       >
-        <Container size="large" spacing="min">
+        <Container size={'large'} spacing={'min'}>
           <ExpandedMenu menu={menu} />
         </Container>
       </div>
 
+      {/* minicart container */}
       <Drawer visible={showMiniCart} close={() => setShowMiniCart(false)}>
         <MiniCart />
       </Drawer>
 
+      {/* mobile menu */}
       <div className={styles.mobileMenuContainer}>
         <Drawer
           hideCross
-          top="98px"
+          top={'98px'}
           isReverse
           visible={mobileMenu}
           close={() => setMobileMenu(false)}
