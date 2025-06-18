@@ -278,3 +278,99 @@
 .root.shrink .navLink {
   padding-bottom: 20px;
 }
+.root {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: white;
+  z-index: 1000;
+  transition: transform 0.4s ease, height 0.3s ease;
+  height: 60px; /* shorter */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.hidden {
+  transform: translateY(-100%);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.linkContainer {
+  display: flex;
+  gap: 2rem;
+}
+
+.navLink {
+  font-size: 1.1rem; /* larger font */
+  font-weight: 500;
+  color: #222;
+  text-decoration: none;
+}
+
+.activeLink {
+  color: #000;
+  border-bottom: 2px solid #000;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.bagNotification {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #000;
+  color: white;
+  font-size: 0.7rem;
+  border-radius: 999px;
+  padding: 2px 5px;
+}
+
+.searchContainer {
+  padding: 1rem 0;
+  background: #f9f9f9;
+}
+
+.searchForm input {
+  font-size: 1rem;
+}
+
+.suggestions {
+  margin-top: 0.5rem;
+}
+
+.suggestion {
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.menuContainer {
+  background: white;
+  transition: opacity 0.3s ease;
+}
+
+.menuContainer.show {
+  opacity: 1;
+}
+
+.brandWrapper {
+  flex-grow: 1;
+  text-align: center;
+}
+
