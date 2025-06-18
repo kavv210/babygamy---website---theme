@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect, createRef } from 'react'; 
 import { Link, navigate } from 'gatsby';
 
 import { isAuth } from '../../helpers/general';
@@ -15,7 +15,7 @@ import MiniCart from '../MiniCart';
 import MobileNavigation from '../MobileNavigation';
 import * as styles from './Header.module.css';
 
-const Header = () => {
+const Header = (prop) => {
   const [showMiniCart, setShowMiniCart] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
@@ -25,6 +25,7 @@ const Header = () => {
 
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState('');
+  const [scrollDirection, setScrollDirection] = useState('up');
 
   const searchRef = createRef();
   const bannerMessage = 'Free shipping worldwide';
@@ -61,6 +62,7 @@ const Header = () => {
       setShowSearch(false);
       setActiveMenu(undefined);
     };
+    window.removeEventListener('scroll', onScroll);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -71,10 +73,31 @@ const Header = () => {
         searchRef.current.focus();
       }, 250);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSearch]);
 
+  // Hover scroll hide/show effect
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const updateScrollDirection = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY < 10) {
+        setScrollDirection('up');
+      } else if (currentScrollY > lastScrollY) {
+        setScrollDirection('down');
+      } else {
+        setScrollDirection('up');
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', updateScrollDirection);
+    return () => window.removeEventListener('scroll', updateScrollDirection);
+  }, []);
+
   return (
-    <div className={styles.root}>
+    <div className={`${styles.root} ${scrollDirection === 'down' ? styles.rootHide : ''}`}>
       <div className={styles.headerMessageContainer}>
         <span>{bannerMessage}</span>
       </div>
@@ -83,7 +106,9 @@ const Header = () => {
           <div className={styles.linkContainer}>
             <nav
               role={'presentation'}
-              onMouseLeave={() => setShowMenu(false)}
+              onMouseLeave={() => {
+                setShowMenu(false);
+              }}
             >
               {Config.headerLinks.map((navObject) => (
                 <Link
@@ -101,33 +126,37 @@ const Header = () => {
           </div>
           <div
             role={'presentation'}
-            onClick={() => setMobileMenu(!mobileMenu)}
+            onClick={() => {
+              setMobileMenu(!mobileMenu);
+            }}
             className={styles.burgerIcon}
           >
-            <Icon symbol={`${mobileMenu ? 'cross' : 'burger'}`} />
+            <Icon symbol={`${mobileMenu === true ? 'cross' : 'burger'}`}></Icon>
           </div>
           <Brand />
           <div className={styles.actionContainers}>
             <button
               aria-label="Search"
               className={`${styles.iconButton} ${styles.iconContainer}`}
-              onClick={() => setShowSearch(!showSearch)}
+              onClick={() => {
+                setShowSearch(!showSearch);
+              }}
             >
-              <Icon symbol={'search'} />
+              <Icon symbol={'search'}></Icon>
             </button>
             <Link
               aria-label="Favorites"
               href="/account/favorites"
               className={`${styles.iconContainer} ${styles.hideOnMobile}`}
             >
-              <Icon symbol={'heart'} />
+              <Icon symbol={'heart'}></Icon>
             </Link>
             <Link
               aria-label="Orders"
               href={isAuth() ? '/login' : '/account/orders/'}
               className={`${styles.iconContainer} ${styles.hideOnMobile}`}
             >
-              <Icon symbol={'user'} />
+              <Icon symbol={'user'}></Icon>
             </Link>
             <button
               aria-label="Cart"
@@ -137,7 +166,7 @@ const Header = () => {
                 setMobileMenu(false);
               }}
             >
-              <Icon symbol={'bag'} />
+              <Icon symbol={'bag'}></Icon>
               <div className={styles.bagNotification}>
                 <span>1</span>
               </div>
@@ -148,13 +177,14 @@ const Header = () => {
           </div>
         </div>
 
+        {/* search container */}
         <div
           className={`${styles.searchContainer} ${
-            showSearch ? styles.show : styles.hide
+            showSearch === true ? styles.show : styles.hide
           }`}
         >
           <h4>What are you looking for?</h4>
-          <form className={styles.searchForm} onSubmit={handleSearch}>
+          <form className={styles.searchForm} onSubmit={(e) => handleSearch(e)}>
             <FormInputField
               ref={searchRef}
               icon={'arrow'}
@@ -187,7 +217,7 @@ const Header = () => {
               setShowSearch(false);
             }}
             className={styles.backdrop}
-          />
+          ></div>
         </div>
       </Container>
 
@@ -195,7 +225,9 @@ const Header = () => {
         role={'presentation'}
         onMouseLeave={() => setShowMenu(false)}
         onMouseEnter={() => setShowMenu(true)}
-        className={`${styles.menuContainer} ${showMenu ? styles.show : ''}`}
+        className={`${styles.menuContainer} ${
+          showMenu === true ? styles.show : ''
+        }`}
       >
         <Container size={'large'} spacing={'min'}>
           <ExpandedMenu menu={menu} />
