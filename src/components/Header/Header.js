@@ -22,7 +22,6 @@ const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const lastScrollY = useRef(0);
 
-  // Handle scroll-based header visibility
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
@@ -38,21 +37,9 @@ const Header = () => {
       lastScrollY.current = currentY;
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleMenuHover = (menuName) => {
-    if (window.innerWidth > 800) {
-      setActiveMenu(menuName);
-    }
-  };
-
-  const handleMenuLeave = () => {
-    if (window.innerWidth > 800) {
-      setActiveMenu(undefined);
-    }
-  };
 
   const navLinks = [
     { label: 'Shop', path: '/shop', name: 'shop' },
@@ -60,43 +47,37 @@ const Header = () => {
   ];
 
   return (
-    <div className={`${styles.root} ${showMenu ? styles['show-header'] : styles['hide-header']}`}>
+    <div className={`${styles.root} ${showMenu ? styles.show : styles.hide}`}>
       <Container>
         <div className={styles.header}>
-          {/* Left Nav Links */}
-          <div className={styles.linkContainer}>
+          <div className={styles.links}>
             {navLinks.map(link => (
               <Link
                 key={link.name}
                 to={link.path}
                 className={styles.navLink}
                 activeClassName={styles.activeLink}
-                onMouseEnter={() => handleMenuHover(link.name)}
-                onMouseLeave={handleMenuLeave}
+                onMouseEnter={() => setActiveMenu(link.name)}
+                onMouseLeave={() => setActiveMenu(undefined)}
               >
                 {link.label}
               </Link>
             ))}
           </div>
 
-          {/* Center Brand */}
           <Brand />
 
-          {/* Right Action Icons */}
-          <div className={styles.actionContainers}>
-            <div className={styles.iconContainer} onClick={() => setShowSearch(!showSearch)}>
+          <div className={styles.actions}>
+            <div onClick={() => setShowSearch(!showSearch)} className={styles.icon}>
               <Icon name="search" />
             </div>
-
-            <div className={styles.iconContainer} onClick={() => setDrawerOpen(true)}>
+            <div onClick={() => setDrawerOpen(true)} className={styles.icon}>
               <Icon name="menu" />
             </div>
-
-            <div className={styles.iconContainer}>
+            <div className={styles.icon}>
               <MiniCart />
             </div>
-
-            <div className={styles.iconContainer}>
+            <div className={styles.icon}>
               {isAuth() ? (
                 <Link to="/account">
                   <Icon name="user" />
@@ -110,18 +91,16 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Expanded Menu */}
         <ExpandedMenu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
 
-        {/* Search */}
         {showSearch && (
-          <div className={styles.searchContainer}>
+          <div className={styles.searchBox}>
             <h4>What are you looking for?</h4>
-            <form className={styles.searchForm} onSubmit={(e) => {
+            <form onSubmit={(e) => {
               e.preventDefault();
-              const query = e.target.search.value.trim();
-              if (query) {
-                navigate(`/search?q=${query}`);
+              const q = e.target.search.value.trim();
+              if (q) {
+                navigate(`/search?q=${q}`);
                 setShowSearch(false);
               }
             }}>
@@ -130,8 +109,6 @@ const Header = () => {
           </div>
         )}
       </Container>
-
-      {/* Drawer */}
       <Drawer open={drawerOpen} setOpen={setDrawerOpen} />
     </div>
   );
