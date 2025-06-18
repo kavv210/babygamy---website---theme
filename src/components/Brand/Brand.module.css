@@ -3,11 +3,11 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  padding: 12px;
+  padding: 20px;
 }
 
 .logo {
-  height: 120px;
+  height: 170px;
   width: auto;
   max-width: 100%;
   object-fit: contain;
