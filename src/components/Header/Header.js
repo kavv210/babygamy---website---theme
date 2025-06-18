@@ -1,243 +1,277 @@
-import React, { useState, useEffect, createRef } from 'react';
-import { Link, navigate } from 'gatsby';
+.root {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: var(--standard-white);
+  z-index: 50;
+  transition: transform 0.3s ease, padding 0.3s ease;
+}
 
-import { isAuth } from '../../helpers/general';
+/* Removes drop shadow */
+.root.hide-header {
+  transform: translateY(-100%);
+}
 
-import AddNotification from '../AddNotification';
-import Brand from '../Brand';
-import Container from '../Container';
-import Config from '../../config.json';
-import Drawer from '../Drawer';
-import ExpandedMenu from '../ExpandedMenu';
-import FormInputField from '../FormInputField/FormInputField';
-import Icon from '../Icons/Icon';
-import MiniCart from '../MiniCart';
-import MobileNavigation from '../MobileNavigation';
-import * as styles from './Header.module.css';
+.root.show-header {
+  transform: translateY(0);
+}
 
-const Header = (prop) => {
-  const [showMiniCart, setShowMiniCart] = useState(false);
-  const [mobileMenu, setMobileMenu] = useState(false);
-  const [showMenu, setShowMenu] = useState(true);
-  const [menu, setMenu] = useState();
-  const [activeMenu, setActiveMenu] = useState();
-  const [showSearch, setShowSearch] = useState(false);
-  const [search, setSearch] = useState('');
-  const searchRef = createRef();
-  const [scrollDirection, setScrollDirection] = useState('up'); // ✅ NEW
+.iconButton {
+  border: none;
+  background-color: unset;
+  overflow: visible;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
 
-  const bannerMessage = 'Available on Amazon & Flipkart';
-  const searchSuggestions = [
-    'Oversize sweaters',
-    'Lama Pajamas',
-    'Candles Cinnamon',
-  ];
+.header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  padding: 36px 0;
+  margin: 0 auto;
+  transition: padding 0.3s ease;
+}
 
-  const handleHover = (navObject) => {
-    if (navObject.category) {
-      setShowMenu(true);
-      setMenu(navObject.category);
-      setShowSearch(false);
-    } else {
-      setMenu(undefined);
-    }
-    setActiveMenu(navObject.menuLabel);
-  };
+.headerMessageContainer {
+  background-color: var(--bg-grey);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    navigate(`/search?q=${search}`);
-    setShowSearch(false);
-  };
+.headerMessageContainer span {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--grey-crumb);
+}
 
-  useEffect(() => {
-    if (showMenu === false) setActiveMenu(false);
-  }, [showMenu]);
+.linkContainer {
+  display: flex;
+  justify-content: flex-start;
+}
 
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
+.navLink {
+  margin-right: 40px;
+  text-transform: uppercase;
+  color: var(--standard-black);
+  font-weight: 500;
+  padding-bottom: 50px;
+  font-size: 12px;
+  line-height: 15px;
+  border-bottom: 2px solid transparent;
+  transition: border 0.3s ease-in-out;
+}
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+.activeLink {
+  border-bottom: 2px solid var(--standard-black);
+}
 
-      if (currentScrollY < lastScrollY || currentScrollY === 0) {
-        setShowMenu(true);
-        setScrollDirection('up'); // ✅ NEW
-      } else {
-        setShowMenu(false);
-        setScrollDirection('down'); // ✅ NEW
-        setShowSearch(false);
-        setActiveMenu(undefined);
-      }
+.actionContainers {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 
-      lastScrollY = currentScrollY;
-    };
+.actionContainers > * {
+  margin-right: 32px;
+  cursor: pointer;
+  color: var(--standard-black);
+}
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 
-  useEffect(() => {
-    if (showSearch === true) {
-      setTimeout(() => {
-        searchRef.current?.focus();
-      }, 250);
-    }
-  }, [showSearch]);
+.iconContainer svg {
+  width: 20px;
+  height: 20px;
+}
 
-  return (
-    <div
-      className={`${styles.root} ${
-        scrollDirection === 'down' ? 'hide-header' : 'show-header'
-      }`}
-    >
-      <div className={styles.headerMessageContainer}>
-        <span>{bannerMessage}</span>
-      </div>
-      <Container size={'large'} spacing={'min'}>
-        <div className={styles.header}>
-          <div className={styles.linkContainer}>
-            <nav role="presentation" onMouseLeave={() => setShowMenu(false)}>
-              {Config.headerLinks.map((navObject) => (
-                <Link
-                  key={navObject.menuLink}
-                  onMouseEnter={() => handleHover(navObject)}
-                  className={`${styles.navLink} ${
-                    activeMenu === navObject.menuLabel
-                      ? styles.activeLink
-                      : ''
-                  }`}
-                  to={navObject.menuLink}
-                >
-                  {navObject.menuLabel}
-                </Link>
-              ))}
-            </nav>
-          </div>
+.menuContainer {
+  position: absolute;
+  background-color: var(--standard-white);
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
 
-          <div
-            role="presentation"
-            onClick={() => setMobileMenu(!mobileMenu)}
-            className={styles.burgerIcon}
-          >
-            <Icon symbol={`${mobileMenu ? 'cross' : 'burger'}`} />
-          </div>
+.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  max-height: 500px !important;
+}
 
-          <Brand />
+.hide {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  max-height: 0px !important;
+  height: 0px;
+}
 
-          <div className={styles.actionContainers}>
-            <button
-              aria-label="Search"
-              className={`${styles.iconButton} ${styles.iconContainer}`}
-              onClick={() => setShowSearch(!showSearch)}
-            >
-              <Icon symbol="search" />
-            </button>
+.searchContainer {
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  z-index: 51;
+}
 
-            <Link
-              aria-label="Favorites"
-              href="/account/favorites"
-              className={`${styles.iconContainer} ${styles.hideOnMobile}`}
-            >
-              <Icon symbol="heart" />
-            </Link>
+.searchContainer h4 {
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 38px;
+}
 
-            <Link
-              aria-label="Orders"
-              href={isAuth() ? '/login' : '/account/orders/'}
-              className={`${styles.iconContainer} ${styles.hideOnMobile}`}
-            >
-              <Icon symbol="user" />
-            </Link>
+.searchForm {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
 
-            <button
-              aria-label="Cart"
-              className={`${styles.iconButton} ${styles.iconContainer} ${styles.bagIconContainer}`}
-              onClick={() => {
-                setShowMiniCart(true);
-                setMobileMenu(false);
-              }}
-            >
-              <Icon symbol="bag" />
-              <div className={styles.bagNotification}>
-                <span>1</span>
-              </div>
-            </button>
+.searchForm input {
+  width: 95% !important;
+  border-bottom: 1px solid var(--standard-black) !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+}
 
-            <div className={styles.notificationContainer}>
-              <AddNotification openCart={() => setShowMiniCart(true)} />
-            </div>
-          </div>
-        </div>
+.suggestionContianer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
 
-        <div
-          className={`${styles.searchContainer} ${
-            showSearch ? styles.show : styles.hide
-          }`}
-        >
-          <h4>What are you looking for?</h4>
-          <form className={styles.searchForm} onSubmit={handleSearch}>
-            <FormInputField
-              ref={searchRef}
-              icon="arrow"
-              id="searchInput"
-              value={search}
-              placeholder=""
-              type="text"
-              handleChange={(_, e) => setSearch(e)}
-            />
-          </form>
-          <div className={styles.suggestionContianer}>
-            {searchSuggestions.map((suggestion, index) => (
-              <p
-                key={index}
-                className={styles.suggestion}
-                onClick={() => {
-                  setShowSearch(false);
-                  navigate(`/search?q=${suggestion}`);
-                }}
-              >
-                {suggestion}
-              </p>
-            ))}
-          </div>
-          <div
-            className={styles.backdrop}
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowSearch(false);
-            }}
-          ></div>
-        </div>
-      </Container>
+.suggestion {
+  padding: 14px 20px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--standard-black);
+  border: 1px solid var(--bg-light-gray);
+  cursor: pointer;
+}
 
-      <div
-        className={`${styles.menuContainer} ${showMenu ? styles.show : ''}`}
-        onMouseEnter={() => setShowMenu(true)}
-        onMouseLeave={() => setShowMenu(false)}
-      >
-        <Container size="large" spacing="min">
-          <ExpandedMenu menu={menu} />
-        </Container>
-      </div>
+.suggestion:hover {
+  background-color: var(--standard-gold);
+  color: var(--standard-white);
+  border: 1px solid transparent;
+}
 
-      <Drawer visible={showMiniCart} close={() => setShowMiniCart(false)}>
-        <MiniCart />
-      </Drawer>
+.backdrop {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  z-index: -1;
+}
 
-      <div className={styles.mobileMenuContainer}>
-        <Drawer
-          hideCross
-          top="98px"
-          isReverse
-          visible={mobileMenu}
-          close={() => setMobileMenu(false)}
-        >
-          <MobileNavigation close={() => setMobileMenu(false)} />
-        </Drawer>
-      </div>
-    </div>
-  );
-};
+.notificationContainer {
+  position: relative;
+}
 
-export default Header;
+.burgerIcon {
+  display: none;
+}
+
+.mobileMenuContainer {
+  display: none;
+}
+
+.bagIconContainer {
+  position: relative;
+}
+
+.bagNotification {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  width: 14px;
+  height: 14px;
+  background-color: var(--standard-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bagNotification span {
+  color: var(--standard-white);
+  font-size: 9px;
+}
+
+@media (max-width: 800px) {
+  .mobileMenuContainer {
+    display: block;
+  }
+
+  .linkContainer {
+    display: none;
+  }
+
+  .burgerIcon {
+    display: flex;
+    align-items: center;
+  }
+
+  .burgerIcon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .hideOnMobile {
+    display: none;
+  }
+
+  .actionContainers > * {
+    margin-right: 16px;
+  }
+
+  .actionContainers > *:last-child {
+    margin-right: 0px;
+  }
+
+  .header {
+    padding: 20px 8px;
+    margin: 0 8px;
+  }
+
+  .searchContainer {
+    width: auto;
+    padding: 0 32px;
+  }
+
+  .searchContainer h4 {
+    font-size: 32px;
+    line-height: 42px;
+  }
+
+  .navLink {
+    font-size: 16px;
+    position: relative;
+    padding: 4px 0;
+  }
+
+  .navLink:hover::after,
+  .activeLink::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: black;
+  }
+}
