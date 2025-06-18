@@ -24,6 +24,7 @@ const Header = (prop) => {
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState('');
   const searchRef = createRef();
+  const [scrollDirection, setScrollDirection] = useState('up'); // ✅ NEW
 
   const bannerMessage = 'Available on Amazon & Flipkart';
   const searchSuggestions = [
@@ -61,8 +62,10 @@ const Header = (prop) => {
 
       if (currentScrollY < lastScrollY || currentScrollY === 0) {
         setShowMenu(true);
+        setScrollDirection('up'); // ✅ NEW
       } else {
         setShowMenu(false);
+        setScrollDirection('down'); // ✅ NEW
         setShowSearch(false);
         setActiveMenu(undefined);
       }
@@ -83,7 +86,11 @@ const Header = (prop) => {
   }, [showSearch]);
 
   return (
-    <div className={`${styles.root} ${!showMenu ? styles.hiddenHeader : ''}`}>
+    <div
+      className={`${styles.root} ${
+        scrollDirection === 'down' ? 'hide-header' : 'show-header'
+      }`}
+    >
       <div className={styles.headerMessageContainer}>
         <span>{bannerMessage}</span>
       </div>
@@ -95,7 +102,11 @@ const Header = (prop) => {
                 <Link
                   key={navObject.menuLink}
                   onMouseEnter={() => handleHover(navObject)}
-                  className={`${styles.navLink} ${activeMenu === navObject.menuLabel ? styles.activeLink : ''}`}
+                  className={`${styles.navLink} ${
+                    activeMenu === navObject.menuLabel
+                      ? styles.activeLink
+                      : ''
+                  }`}
                   to={navObject.menuLink}
                 >
                   {navObject.menuLabel}
