@@ -1,23 +1,22 @@
 :root {
-  --primary: #f4f0fa;
-  --accent: #c9b6e4;
-  --text: #333;
-  --white: #fff;
-  --gray: #ccc;
-  --hover: #e7dcf9;
+  --primary: #fdf4ff;
+  --accent: #d3a7f5;
+  --text: #2a2a2a;
+  --white: #ffffff;
+  --gray: #dcdcdc;
+  --hover: #f5e6ff;
   --transition-speed: 0.3s;
 }
 
 .root {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
   background-color: var(--white);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
-  transition: top var(--transition-speed) ease, opacity var(--transition-speed) ease;
-  opacity: 1;
-  padding-top: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: top var(--transition-speed), opacity var(--transition-speed);
 }
 
 .rootHidden {
@@ -29,8 +28,8 @@
 .headerMessageContainer {
   background-color: var(--primary);
   text-align: center;
-  padding: 0.3rem 0;
-  font-size: 0.85rem;
+  padding: 6px 0;
+  font-size: 0.8rem;
   color: var(--text);
 }
 
@@ -38,24 +37,27 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 64px; /* Slightly shorter */
-  padding: 0 1rem;
+  height: 56px;
+  padding: 0 1.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
   gap: 1rem;
 }
 
 .linkContainer {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.25rem;
   align-items: center;
+  flex: 1;
 }
 
 .navLink {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--text);
   text-decoration: none;
+  padding: 4px 0;
   position: relative;
-  padding: 0.3rem 0;
-  transition: color var(--transition-speed) ease;
+  transition: color var(--transition-speed);
 }
 
 .navLink:hover,
@@ -71,7 +73,7 @@
   width: 0%;
   height: 2px;
   background-color: var(--accent);
-  transition: width var(--transition-speed) ease;
+  transition: width var(--transition-speed);
 }
 
 .navLink:hover::after,
@@ -103,13 +105,16 @@
 .iconButton {
   background: none;
   border: none;
+  padding: 4px;
   cursor: pointer;
-  padding: 0.4rem;
-  transition: transform var(--transition-speed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .iconButton:hover {
   transform: scale(1.1);
+  transition: transform var(--transition-speed);
 }
 
 .iconContainer {
@@ -129,8 +134,8 @@
   background-color: var(--accent);
   color: var(--white);
   font-size: 0.65rem;
-  border-radius: 50%;
-  padding: 2px 5px;
+  border-radius: 9999px;
+  padding: 2px 6px;
 }
 
 .notificationContainer {
@@ -139,9 +144,7 @@
 
 .searchContainer {
   position: relative;
-  padding: 1rem 0;
-  transition: opacity var(--transition-speed);
-  opacity: 1;
+  padding: 1rem;
 }
 
 .searchContainer.hide {
