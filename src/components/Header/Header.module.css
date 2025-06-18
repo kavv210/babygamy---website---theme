@@ -27,9 +27,10 @@
   padding: 12px 32px;
 }
 
+/* ✅ FIXED SHOP & ABOUT SPACING */
 .linkContainer {
   display: flex;
-  gap: 32px; /* increased spacing */
+  gap: 32px;
   align-items: center;
 }
 
@@ -40,6 +41,7 @@
   position: relative;
 }
 
+/* ✅ HOVER EFFECT INTACT */
 .navLink:hover::after,
 .activeLink::after {
   content: '';
@@ -66,14 +68,18 @@
   }
 
   .linkContainer {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 12px 0;
+    align-items: center;
   }
 }
 
 .actionContainers {
   display: flex;
   align-items: center;
-  gap: 16px; /* better spacing */
+  gap: 16px;
 }
 
 .iconContainer {
@@ -193,9 +199,4 @@
   left: 0;
   right: 0;
   z-index: 30;
-}
-.linkContainer {
-  display: flex;
-  gap: 32px; /* ✅ This ensures "Shop" and "About" are not stuck together */
-  align-items: center;
 }
