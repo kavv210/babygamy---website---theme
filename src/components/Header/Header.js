@@ -15,7 +15,7 @@ import MiniCart from '../MiniCart';
 import MobileNavigation from '../MobileNavigation';
 import * as styles from './Header.module.css';
 
-const Header = (prop) => {
+const Header = () => {
   const [showMiniCart, setShowMiniCart] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
@@ -62,7 +62,6 @@ const Header = (prop) => {
       setShowSearch(false);
       setActiveMenu(undefined);
     };
-    window.removeEventListener('scroll', onScroll);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -73,10 +72,8 @@ const Header = (prop) => {
         searchRef.current.focus();
       }, 250);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSearch]);
 
-  // Hover scroll hide/show effect
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
@@ -106,9 +103,7 @@ const Header = (prop) => {
           <div className={styles.linkContainer}>
             <nav
               role={'presentation'}
-              onMouseLeave={() => {
-                setShowMenu(false);
-              }}
+              onMouseLeave={() => setShowMenu(false)}
             >
               {Config.headerLinks.map((navObject) => (
                 <Link
@@ -126,9 +121,7 @@ const Header = (prop) => {
           </div>
           <div
             role={'presentation'}
-            onClick={() => {
-              setMobileMenu(!mobileMenu);
-            }}
+            onClick={() => setMobileMenu(!mobileMenu)}
             className={styles.burgerIcon}
           >
             <Icon symbol={`${mobileMenu === true ? 'cross' : 'burger'}`}></Icon>
@@ -138,9 +131,7 @@ const Header = (prop) => {
             <button
               aria-label="Search"
               className={`${styles.iconButton} ${styles.iconContainer}`}
-              onClick={() => {
-                setShowSearch(!showSearch);
-              }}
+              onClick={() => setShowSearch(!showSearch)}
             >
               <Icon symbol={'search'}></Icon>
             </button>
@@ -177,14 +168,13 @@ const Header = (prop) => {
           </div>
         </div>
 
-        {/* search container */}
         <div
           className={`${styles.searchContainer} ${
             showSearch === true ? styles.show : styles.hide
           }`}
         >
           <h4>What are you looking for?</h4>
-          <form className={styles.searchForm} onSubmit={(e) => handleSearch(e)}>
+          <form className={styles.searchForm} onSubmit={handleSearch}>
             <FormInputField
               ref={searchRef}
               icon={'arrow'}
@@ -198,36 +188,33 @@ const Header = (prop) => {
           <div className={styles.suggestionContianer}>
             {searchSuggestions.map((suggestion, index) => (
               <p
-                role={'presentation'}
+                key={index}
+                className={styles.suggestion}
                 onClick={() => {
                   setShowSearch(false);
                   navigate(`/search?q=${suggestion}`);
                 }}
-                key={index}
-                className={styles.suggestion}
               >
                 {suggestion}
               </p>
             ))}
           </div>
           <div
-            role={'presentation'}
+            className={styles.backdrop}
             onClick={(e) => {
               e.stopPropagation();
               setShowSearch(false);
             }}
-            className={styles.backdrop}
           ></div>
         </div>
       </Container>
 
       <div
-        role={'presentation'}
-        onMouseLeave={() => setShowMenu(false)}
-        onMouseEnter={() => setShowMenu(true)}
         className={`${styles.menuContainer} ${
           showMenu === true ? styles.show : ''
         }`}
+        onMouseLeave={() => setShowMenu(false)}
+        onMouseEnter={() => setShowMenu(true)}
       >
         <Container size={'large'} spacing={'min'}>
           <ExpandedMenu menu={menu} />
