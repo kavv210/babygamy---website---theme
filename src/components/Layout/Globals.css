@@ -242,26 +242,24 @@ ol {
   top: auto !important;
   z-index: auto !important;
 }
-/* ===== UNIVERSAL ROUNDING AND HOVER SCALE ===== */
+/* ===== Subtle Rounding and Gentle Hover Pop ===== */
 
-/* For all images */
-img {
-  border-radius: 24px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Rounded corners and soft transitions */
+img,
+a,
+div,
+section,
+button {
+  border-radius: 12px; /* Softer curve */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* For all links, divs, sections, buttons that may be visual containers */
-a, div, section, button {
-  border-radius: 16px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Hover scale effect for visual elements */
+/* Soft hover scale */
 img:hover,
 a:hover,
 div:hover,
 section:hover,
 button:hover {
-  transform: scale(1.03);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: scale(1.015); /* Just a little lift */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); /* Soft shadow */
 }
