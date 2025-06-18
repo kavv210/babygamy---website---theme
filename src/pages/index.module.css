@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+
 .root {
 
 }
@@ -15,7 +17,6 @@
     line-height: 62px;
 }
 
-
 .messageContainer {
     text-align: center;
     padding: 60px 0px;
@@ -30,14 +31,26 @@
     text-align: center;
 }
 
+/* ⭐ Edited first line of message with Gloria Hallelujah */
+.messageContainer p:first-of-type {
+    font-family: 'Gloria Hallelujah', cursive;
+    font-size: 2rem;
+    text-transform: none;
+    font-weight: normal;
+    color: #333;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
 .gold {
     color: var(--standard-gold);
 }
 
-.contentTitle{
+.contentTitle {
     text-align: center;
     font-weight: normal;
-    font-size: 42px;
+    font-size: 30px;
     line-height: 50px;
     margin-bottom: 16px;
 }
@@ -76,7 +89,6 @@
 .linkContainers a:hover {
     color: var(--standard-gold);
     border-bottom: 1px solid var(--standard-gold);
-
 }
 
 .sustainableContainer {
