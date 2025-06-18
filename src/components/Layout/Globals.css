@@ -216,6 +216,14 @@ ol {
   transition: all 0.5s ease-in-out;
 }
 
+.divider {
+  border: none;
+  border-top: 2px solid pink;
+  border-image: linear-gradient(to right, aqua, pink) 1;
+  margin: 40px 0;
+}
+
+
 /* Logo/Name fix to avoid sticky behavior */
 .logo, .navbar, header {
   position: relative !important;
