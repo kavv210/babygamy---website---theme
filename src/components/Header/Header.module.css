@@ -25,12 +25,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 32px;
+  flex-wrap: wrap;
 }
 
-/* ✅ FIXED SHOP & ABOUT SPACING */
 .linkContainer {
   display: flex;
-  gap: 32px;
+  gap: 40px; /* ✅ spacing between Shop and About */
   align-items: center;
 }
 
@@ -39,9 +39,9 @@
   text-decoration: none;
   font-size: 16px;
   position: relative;
+  padding: 4px 0;
 }
 
-/* ✅ HOVER EFFECT INTACT */
 .navLink:hover::after,
 .activeLink::after {
   content: '';
@@ -62,17 +62,14 @@
   cursor: pointer;
 }
 
+/* ✅ MOBILE VIEW FIX: Hide Shop & About */
 @media (max-width: 768px) {
   .burgerIcon {
     display: block;
   }
 
   .linkContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin: 12px 0;
-    align-items: center;
+    display: none !important; /* ✅ Hides nav links like Shop & About on mobile */
   }
 }
 
