@@ -27,14 +27,14 @@ html {
   --brand-font: 'Yeseva One', cursive;
 
   --standard-black: #000000;
-  --standard-white: #ffffff;
+  --standard-white: #000000;
 
   /* Pastel Palette */
   --pastel-pink: #ffd6e0;
-  --pastel-blue: #d6f0ff;
-  --pastel-purple: #e3d6ff;
-  --pastel-yellow: #ffe4ed;
-  --pastel-green: #d9ffe4;
+  --pastel-blue: #76d6ff;
+  --pastel-purple:#f55395;
+  --pastel-yellow: #FFFFF0;
+  --pastel-green: ##f6cb6c;
   --standard-grey: #e2e2e2;
   --standard-dark-grey: #545250;
   --standard-light-grey: #FCFAF6;
@@ -218,9 +218,9 @@ ol {
 
 .divider {
   border: none;
-  border-top: 2px solid pink;
-  border-image: linear-gradient(to right, aqua, pink) 1;
+  border-top: 1px solid black;
   margin: 40px 0;
+  width: 100%;
 }
 
 
